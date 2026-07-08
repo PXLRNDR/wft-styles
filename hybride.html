@@ -179,7 +179,15 @@
 function boardEnhance(P){
   var PAGE=(location.pathname.split('/').pop()||'page');
   var NOTE="\n\n— Palet (constant): Lindenhaeghe, warm & licht op licht-roze/creme; brand-rood hoofd, coral-oranje 2e, beetje groen, vleugje aubergine; nooit paars-zwaar.\n— No-text (constant): geen tekst/letters/cijfers/logo's · 16:9.";
-  function gs(c){var v=localStorage.getItem('v:'+PAGE+':'+c);return v?(parseInt(v,10)||0):0;}
+  var SB_URL="https://fuesnaztbyhygyladlbv.supabase.co",SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1ZXNuYXp0YnloeWd5bGFkbGJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NjE2NzgsImV4cCI6MjA5NTAzNzY3OH0.9A65Xuhlhgao8j8DktTjkBnYbRk57fg8CsW0HbqsAxw";
+  var VID=localStorage.getItem('wft_vid');if(!VID){VID=(self.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now()+'-'+Math.random());localStorage.setItem('wft_vid',VID);}
+  function sbapi(q,o){o=o||{};return fetch(SB_URL+'/rest/v1/'+q,Object.assign({},o,{headers:Object.assign({apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},o.headers||{})}));}
+  var NET={},OWN={},CARDS_BY_CODE={};
+  function gs(c){return NET[c]||0;}
+  function _refreshAll(){Object.keys(CARDS_BY_CODE).forEach(function(c){var card=CARDS_BY_CODE[c];card.dataset.score=NET[c]||0;if(card._rend)card._rend();});if(typeof lb!=='undefined'&&lb&&lb.classList.contains('open')&&typeof renderLB==='function')renderLB();}
+  function _loadVotes(){return sbapi('wft_votes?select=code,voter_id,vote&page=eq.'+encodeURIComponent(PAGE)).then(function(r){return r.ok?r.json():[];}).then(function(rows){NET={};OWN={};rows.forEach(function(row){NET[row.code]=(NET[row.code]||0)+row.vote;if(row.voter_id===VID)OWN[row.code]=row.vote;});_refreshAll();}).catch(function(){});}
+  function _migrate(){var mk='wft_migrated:'+PAGE;if(localStorage.getItem(mk))return Promise.resolve();var mig=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('v:'+PAGE+':')===0){var code=k.slice(('v:'+PAGE+':').length);var old=parseInt(localStorage.getItem(k),10)||0;var v=old>0?1:(old<0?-1:0);if(v!==0)mig.push({page:PAGE,code:code,voter_id:VID,vote:v});}}localStorage.setItem(mk,'1');if(!mig.length)return Promise.resolve();return sbapi('wft_votes',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(mig)}).catch(function(){});}
+  Promise.resolve().then(function(){_migrate().then(_loadVotes);});
   function ss(c,s){localStorage.setItem('v:'+PAGE+':'+c,s);}
   function resort(g){ if(!g)return; var cs=[].slice.call(g.querySelectorAll('.card'));
     cs.sort(function(a,b){return (+b.dataset.score)-(+a.dataset.score);}); cs.forEach(function(c){g.appendChild(c);}); }
@@ -196,10 +204,11 @@ function boardEnhance(P){
     var dn=document.createElement('button'); dn.className='down'; dn.type='button'; dn.textContent='👎'; dn.title='Dislike (omlaag)';
     var rs=document.createElement('button'); rs.className='reset'; rs.type='button'; rs.textContent='reset';
     bar.appendChild(up); bar.appendChild(scr); bar.appendChild(dn); bar.appendChild(rs); meta.appendChild(bar);
-    function rend(){var s=+card.dataset.score; scr.textContent=s; up.classList.toggle('on',s>0); dn.classList.toggle('on',s<0);}
-    function set(s){card.dataset.score=s; ss(code,s); rend();}
-    up.onclick=function(){set(+card.dataset.score+1);}; dn.onclick=function(){set(+card.dataset.score-1);}; rs.onclick=function(){set(0);};
-    rend();
+    CARDS_BY_CODE[code]=card;
+    card._rend=function(){scr.textContent=NET[code]||0;up.classList.toggle('on',(OWN[code]||0)>0);dn.classList.toggle('on',(OWN[code]||0)<0);};
+    function vote(v){var o=OWN[code]||0;if(v===o)v=0;NET[code]=(NET[code]||0)+(v-o);OWN[code]=v;card.dataset.score=NET[code]||0;card._rend();if(typeof lb!=='undefined'&&lb&&lb.classList.contains('open'))renderLB();sbapi('wft_votes',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({page:PAGE,code:code,voter_id:VID,vote:v})}).catch(function(){});}
+    up.onclick=function(){vote(1);};dn.onclick=function(){vote(-1);};rs.onclick=function(){vote(0);};
+    card._rend();
   });
   /* geen herschikking: kaarten blijven op hun vaste plek */
   var cards=[].slice.call(document.querySelectorAll('.card'));
@@ -211,7 +220,7 @@ function boardEnhance(P){
   lb.innerHTML='<button class="lbx" type="button" title="sluiten">✕</button><button class="lbnav prev" type="button" title="vorige">‹</button><img class="lbimg" alt="vergroot"><button class="lbnav next" type="button" title="volgende">›</button><div class="lbbar"><span class="lbcap"></span><button class="up" type="button" title="Like">👍</button><span class="score">0</span><button class="down" type="button" title="Dislike">👎</button></div>';
   document.body.appendChild(lb);
   var big=lb.querySelector('.lbimg'), cap=lb.querySelector('.lbcap'), lup=lb.querySelector('.lbbar .up'), lsc=lb.querySelector('.lbbar .score'), ldn=lb.querySelector('.lbbar .down');
-  function renderLB(){ var c=cards[idx]; if(!c)return; big.src=_src(c); cap.textContent=_code(c)+' · '+_title(c); var s=+c.dataset.score||0; lsc.textContent=s; lup.classList.toggle('on',s>0); ldn.classList.toggle('on',s<0); }
+  function renderLB(){ var c=cards[idx]; if(!c)return; big.src=_src(c); cap.textContent=_code(c)+' · '+_title(c); var cd=_code(c); lsc.textContent=NET[cd]||0; lup.classList.toggle('on',(OWN[cd]||0)>0); ldn.classList.toggle('on',(OWN[cd]||0)<0); }
   function openAt(i){ idx=i; renderLB(); lb.classList.add('open'); }
   function step(d){ var n=cards.length; if(!n)return; var i=idx; for(var k=0;k<n;k++){ i=(i+d+n)%n; if(_src(cards[i])){ idx=i; break; } } renderLB(); }
   function closeLB(){ lb.classList.remove('open'); }
