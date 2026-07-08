@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>WFT · P · Presentator-stijlen</title>
+<style>
+  :root{--paper:#FBFCFD;--paper-2:#F0F3F7;--ink:#16191F;--ink-2:#454C5C;--muted:#737B8D;--rule:#E1E5EC;--navy:#1E2761;
+    --lh-red:#AC2E32;--lh-orange:#E1603D;--lh-green:#76B041;
+    --serif:"Charter","Iowan Old Style",Palatino,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;
+    --hatch:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(30,39,97,.05) 8px,rgba(30,39,97,.05) 9px);}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .shell{max-width:1320px;margin:0 auto;padding:clamp(24px,5vw,52px);}
+  .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);font-weight:600;}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.02em;margin:.4em 0 .3em;}
+  .lead{color:var(--ink-2);font-size:1.05rem;max-width:74ch;margin:0 0 6px;}
+  .note{color:var(--muted);font-size:.9rem;max-width:74ch;}
+  .group{margin-top:36px;}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media(max-width:820px){.grid{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--rule);background:var(--paper);border-radius:4px;overflow:hidden;box-shadow:0 1px 2px rgba(24,32,64,.05),0 8px 20px -16px rgba(24,32,64,.22);}
+  .frame{position:relative;aspect-ratio:16/9;background:var(--paper-2);background-image:var(--hatch);}
+  .frame img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;}
+  .frame .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;}
+  .frame .code{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:.66rem;font-weight:700;color:#fff;background:var(--navy);padding:2px 8px;border-radius:5px;}
+  .meta{padding:12px 14px 14px;}
+  .meta h3{font-family:var(--serif);font-weight:600;font-size:1.12rem;margin:0;letter-spacing:-.01em;}
+  .meta .scn{font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);margin-top:4px;}
+  .meta p{margin:5px 0 0;color:var(--ink-2);font-size:.88rem;line-height:1.5;}
+  footer{margin-top:44px;border-top:1px solid var(--rule);padding-top:18px;color:var(--muted);font-size:.84rem;}
+  .promptbox{margin-top:9px;border-top:1px solid var(--rule);padding-top:8px;}
+  .promptbox summary{cursor:pointer;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);font-weight:700;list-style:none;}
+  .promptbox summary::-webkit-details-marker{display:none;}
+  .promptbox summary::before{content:"\25B8 prompt";}
+  .promptbox[open] summary::before{content:"\25BE prompt";}
+  .promptbox .p{margin-top:7px;font-family:var(--mono);font-size:.68rem;line-height:1.55;color:var(--ink-2);white-space:pre-wrap;background:var(--paper-2);border:1px solid var(--rule);border-radius:6px;padding:9px 10px;}
+  .vote{display:flex;align-items:center;gap:7px;margin-top:10px;}
+  .vote button{font-family:var(--sans);font-size:.95rem;line-height:1;border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:4px 11px;cursor:pointer;transition:background .15s,border-color .15s,transform .08s;}
+  .vote button:active{transform:scale(.88);}
+  .vote .up:hover{background:color-mix(in srgb,var(--lh-green) 12%,#fff);}
+  .vote .down:hover{background:color-mix(in srgb,var(--lh-red) 12%,#fff);}
+  .vote .up.on{background:color-mix(in srgb,var(--lh-green) 22%,#fff);border-color:var(--lh-green);}
+  .vote .down.on{background:color-mix(in srgb,var(--lh-red) 22%,#fff);border-color:var(--lh-red);}
+  .vote .score{font-family:var(--mono);font-size:.85rem;font-weight:700;min-width:2.2ch;text-align:center;}
+  .vote .reset{margin-left:auto;font-size:.6rem;color:var(--muted);border:0;background:none;text-decoration:underline;cursor:pointer;padding:2px;}
+  .lb{position:fixed;inset:0;background:rgba(16,19,25,.86);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;cursor:zoom-out;}
+  .lb.open{display:flex;}
+  .lb .lbimg{max-width:88vw;max-height:82vh;border-radius:6px;box-shadow:0 24px 70px rgba(0,0,0,.55);}
+  .lbnav{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;font-size:2rem;line-height:1;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .lbnav:hover{background:rgba(255,255,255,.28);}
+  .lbnav.prev{left:18px;} .lbnav.next{right:18px;}
+  .lbx{position:fixed;top:16px;right:18px;width:42px;height:42px;border-radius:50%;font-size:1.2rem;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);cursor:pointer;}
+  .lbbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:rgba(20,22,28,.72);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:999px;color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:92vw;}
+  .lbcap{font-family:var(--mono);font-size:1.2rem;font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:4px;}
+  .lbbar .up,.lbbar .down{font-size:1.05rem;line-height:1;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 12px;cursor:pointer;color:#fff;}
+  .lbbar .up.on{background:rgba(118,176,65,.55);border-color:#76B041;}
+  .lbbar .down.on{background:rgba(172,46,50,.6);border-color:#AC2E32;}
+  .lbbar .score{font-family:var(--mono);font-weight:700;min-width:2ch;text-align:center;}
+</style>
+</head>
+<body>
+<div class="shell">
+  <span class="kicker">Groep P · Presentator-stijlen</span>
+  <h1>P · Presentator / host — opleidingsvideo-vormen</h1>
+  <p class="lead">Verschillende <strong>presentatievormen</strong> met een presentator/host, zoals in een opleidingsvideo. Hier verschilt vooral de <em>set/format</em> (studio, panelen, videowall, glasbord…). Presentator afwisselend man/vrouw, Lindenhaeghe-palet.</p>
+  <p class="note">Klik een beeld om te vergroten (bladeren met ←/→), vouw de prompt uit, en geef 👍/👎. Kaarten blijven op hun vaste plek.</p>
+
+  <style>
+    .pscript{margin:34px 0 8px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);box-shadow:0 1px 2px rgba(24,32,64,.05),0 10px 26px -18px rgba(24,32,64,.22);overflow:hidden;}
+    .pscript .hd{padding:16px clamp(16px,3vw,24px);border-bottom:1px solid var(--rule);background:var(--paper-2);}
+    .pscript h2{font-family:var(--serif);font-weight:600;font-size:1.3rem;margin:0;letter-spacing:-.01em;}
+    .pscript h2 span{font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--lh-red);padding:2px 8px;border-radius:5px;vertical-align:middle;margin-left:8px;}
+    .pscript .intro{margin:8px 0 0;color:var(--ink-2);font-size:.95rem;}
+    .pscript ol{list-style:none;margin:0;padding:0;}
+    .pscript li{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:16px clamp(16px,3vw,24px);border-top:1px solid var(--rule);}
+    .pscript li:first-child{border-top:0;}
+    @media(max-width:680px){.pscript li{grid-template-columns:1fr;gap:8px;}}
+    .pscript .seg{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--navy);font-weight:700;}
+    .pscript .beeld{color:var(--muted);font-size:.86rem;line-height:1.5;margin-top:4px;}
+    .pscript .zegt{font-family:var(--serif);font-size:1.14rem;line-height:1.5;color:var(--ink);}
+    .pscript .zegt::before{content:"“";color:var(--lh-red);}
+    .pscript .zegt::after{content:"”";color:var(--lh-red);}
+    .pscript .prod{padding:14px clamp(16px,3vw,24px);border-top:1px solid var(--rule);color:var(--muted);font-size:.82rem;background:var(--paper-2);}
+    .pscript .prod code{font-family:var(--mono);font-size:.9em;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;}
+  </style>
+  <section class="pscript">
+    <div class="hd">
+      <h2>Presentator-script <span>NL · gesproken</span></h2>
+      <p class="intro">Host-variant van "Van cursist naar vertrouwde adviseur": de presentator spreekt de kijker direct aan (Nederlands, je-vorm, warm-professioneel). Per segment zie je het beeld + wat de presentator zégt. ~40 sec.</p>
+    </div>
+    <ol>
+      <li>
+        <div><div class="seg">1 · Opening</div><div class="beeld">Presentator kijkt in de camera in een rustige studio; naast haar/hem verschijnen zacht de iconen huis, schild en groeigrafiek.</div></div>
+        <div class="zegt">Hoe word je van cursist een adviseur waar klanten écht op bouwen? Dat begint met vakbekwaamheid — en precies daar draait de Wft-opleiding om.</div>
+      </li>
+      <li>
+        <div><div class="seg">2 · De opleiding</div><div class="beeld">Presentator wijst naar een oplopende reeks module-iconen: basis, schade, vermogen, hypotheken, pensioen.</div></div>
+        <div class="zegt">Stap voor stap bouw je je kennis op: van de basis tot schade, vermogen, hypotheken en pensioen. Elke module brengt je een stukje verder.</div>
+      </li>
+      <li>
+        <div><div class="seg">3 · Certificering</div><div class="beeld">Een rozet met vinkje / diploma licht op naast de presentator.</div></div>
+        <div class="zegt">Haal je de examens, dan heb je je Wft-diploma. Daarmee laat je zien dat je de financiële wereld begrijpt — en dat je binnen de regels goed adviseert.</div>
+      </li>
+      <li>
+        <div><div class="seg">4 · Het advies</div><div class="beeld">Presentator gebaart warm en uitnodigend; op het scherm een advies-/handdruk-moment met een klant.</div></div>
+        <div class="zegt">En dan het mooiste moment: je zit tegenover een klant en geeft advies met vertrouwen. Klaar om die stap te zetten? Dan beginnen we.</div>
+      </li>
+    </ol>
+    <p class="prod"><strong>Consistentie (belangrijk):</strong> binnen één stijl is de <strong>set én de presentator in élk segment exact gelijk</strong>. Aanpak: segment&nbsp;1 is het <strong>ankerframe</strong> (presentator + set); segment&nbsp;2–4 zijn <strong>edits op dat ankerframe</strong> — alléén het gebaar en de graphic op paneel/scherm veranderen, zodat achtergrond en persoon identiek blijven. Presentator-gezicht extra geborgd via een character-referentie (Soul). Daarna: Nederlandse voice-over met lip-sync (Higgsfield <code>Speak</code> of eigen NL-stem), zodat de persoon in beeld de tekst echt uitspreekt.</p>
+  </section>
+
+  <div class="group">
+    <div class="grid">
+      <div class="card"><div class="frame"><span class="code">P2</span><div class="ph">render volgt…</div><img alt="NatGeo panels" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/pres-p2.jpg"></div><div class="meta"><h3>National Geographic panels</h3><div class="scn">vrouw · fotoreal</div><p>Presentator tussen grote grafische expo-panelen, wijst naar infographics.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">P4</span><div class="ph">render volgt…</div><img alt="Keynote videowall" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/pres-p4.jpg"></div><div class="meta"><h3>Keynote videowall</h3><div class="scn">man · fotoreal</div><p>Presentator naast een grote gebogen videowall/touchscreen, keynote-stijl.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">P6</span><div class="ph">render volgt…</div><img alt="Holografische AR-studio" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/pres-p6.jpg"></div><div class="meta"><h3>Holografische AR-studio</h3><div class="scn">vrouw · 3D</div><p>Presentator te midden van zwevende holografische 3D-data, futuristisch.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">P7</span><div class="ph">render volgt…</div><img alt="Lightboard / glasbord" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/pres-p7.jpg"></div><div class="meta"><h3>Lightboard / glasbord</h3><div class="scn">man · fotoreal</div><p>Presentator tekent gloeiende diagrammen op een glasbord richting kijker.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">P9</span><div class="ph">render volgt…</div><img alt="Clean Minimal Modern" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/pres-p9.jpg"></div><div class="meta"><h3>Clean Minimal Modern</h3><div class="scn">man · fotoreal</div><p>Presentator tegen een strakke, moderne, minimale achtergrond.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">P10</span><div class="ph">render volgt…</div><img alt="Warme host-set" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/pres-p10.jpg"></div><div class="meta"><h3>Warme host-/talkshow-set</h3><div class="scn">vrouw · fotoreal</div><p>Gezellige merk-set: zachte stoel, planten, warme lampen, bijzettafel.</p></div></div>
+    </div>
+  </div>
+
+  <footer>Groep P = presentator/host-video-stijlen. Beelden via Higgsfield (gpt_image_2 / nano_banana / 3D) · Lindenhaeghe-palet.</footer>
+</div>
+<script>
+  document.querySelectorAll('img[data-src]').forEach(function(img){var r=new Image();r.onload=function(){img.src=img.getAttribute('data-src');var ph=img.parentElement.querySelector('.ph');if(ph)ph.remove();};r.src=img.getAttribute('data-src');});
+</script>
+<script>
+(function(){
+  var P={
+    P2:"A photorealistic educational-video still: a confident FEMALE Dutch presenter (business-casual) standing among large freestanding exhibition PANELS/boards in a bright studio, gesturing toward infographic visuals on the panels (house, shield, growth chart as simple icons/charts). National-Geographic-style exhibit set, soft studio lighting, depth of field.",
+    P4:"A photorealistic keynote-presentation still: a confident MALE Dutch presenter (business-casual) standing beside a huge curved VIDEOWALL / large touchscreen, pointing at big simple infographic graphics (house, shield, rising chart as icons). Sleek modern keynote stage, soft spotlight, premium.",
+    P6:"A clean stylized 3D RENDER (modern 3D, adult & professional, not childish, not a photo): a FEMALE presenter amid floating HOLOGRAPHIC 3D data panels and glowing 3D icons (house, shield, growth graph), futuristic fintech AR studio, soft glow and depth.",
+    P7:"A photorealistic LIGHTBOARD teaching-video still: a MALE Dutch presenter (business-casual) writing/drawing simple glowing diagrams and icons (house, shield, upward arrow) on an illuminated glass board facing the viewer, dark studio so the glowing drawings pop, warm brand-coloured glow.",
+    P9:"A photorealistic modern minimal presenter-video still: a confident MALE Dutch presenter (smart business-casual) against a clean simple modern seamless studio backdrop (soft light-pink/cream), minimal props, generous negative space, contemporary and uncluttered, soft even studio lighting, subtle brand-red/orange accent.",
+    P10:"A photorealistic warm host / talkshow set video still: a confident FEMALE Dutch presenter (business-casual) in a cozy branded set with a soft chair, plants, warm lamps and a side table, approachable and professional, warm inviting lighting, shallow depth of field."
+  };
+  boardEnhance(P);
+})();
+function boardEnhance(P){
+  var PAGE=(location.pathname.split('/').pop()||'page');
+  var NOTE="\n\n— Palet (constant): Lindenhaeghe, warm & licht op licht-roze/creme; brand-rood hoofd, coral-oranje 2e, beetje groen, vleugje aubergine; nooit paars-zwaar.\n— No-text (constant): geen leesbare tekst; panelen/schermen tonen alleen iconen/charts · 16:9.";
+  function gs(c){var v=localStorage.getItem('v:'+PAGE+':'+c);return v?(parseInt(v,10)||0):0;}
+  function ss(c,s){localStorage.setItem('v:'+PAGE+':'+c,s);}
+  document.querySelectorAll('.card').forEach(function(card){
+    var ce=card.querySelector('.code'); if(!ce)return; var code=ce.textContent.trim();
+    var meta=card.querySelector('.meta'); if(!meta)return;
+    if(P[code]){ var d=document.createElement('details'); d.className='promptbox';
+      var su=document.createElement('summary'); d.appendChild(su);
+      var pv=document.createElement('div'); pv.className='p'; pv.textContent=P[code]+NOTE; d.appendChild(pv); meta.appendChild(d); }
+    card.dataset.score=gs(code);
+    var bar=document.createElement('div'); bar.className='vote';
+    var up=document.createElement('button'); up.className='up'; up.type='button'; up.textContent='👍'; up.title='Like';
+    var scr=document.createElement('span'); scr.className='score'; scr.textContent=card.dataset.score;
+    var dn=document.createElement('button'); dn.className='down'; dn.type='button'; dn.textContent='👎'; dn.title='Dislike';
+    var rs=document.createElement('button'); rs.className='reset'; rs.type='button'; rs.textContent='reset';
+    bar.appendChild(up); bar.appendChild(scr); bar.appendChild(dn); bar.appendChild(rs); meta.appendChild(bar);
+    function rend(){var s=+card.dataset.score; scr.textContent=s; up.classList.toggle('on',s>0); dn.classList.toggle('on',s<0);}
+    function set(s){card.dataset.score=s; ss(code,s); rend();}
+    up.onclick=function(){set((+card.dataset.score||0)+1);}; dn.onclick=function(){set((+card.dataset.score||0)-1);}; rs.onclick=function(){set(0);};
+    rend();
+  });
+  var cards=[].slice.call(document.querySelectorAll('.card'));
+  function _src(card){var im=card.querySelector('.frame img'); return im?(im.currentSrc||im.getAttribute('src')||''):'';}
+  function _code(card){var e=card.querySelector('.code'); return e?e.textContent.trim():'';}
+  function _title(card){var e=card.querySelector('h3'); return e?e.textContent.trim():'';}
+  var idx=-1;
+  var lb=document.createElement('div'); lb.className='lb';
+  lb.innerHTML='<button class="lbx" type="button" title="sluiten">✕</button><button class="lbnav prev" type="button" title="vorige">‹</button><img class="lbimg" alt="vergroot"><button class="lbnav next" type="button" title="volgende">›</button><div class="lbbar"><span class="lbcap"></span><button class="up" type="button" title="Like">👍</button><span class="score">0</span><button class="down" type="button" title="Dislike">👎</button></div>';
+  document.body.appendChild(lb);
+  var big=lb.querySelector('.lbimg'), cap=lb.querySelector('.lbcap'), lup=lb.querySelector('.lbbar .up'), lsc=lb.querySelector('.lbbar .score'), ldn=lb.querySelector('.lbbar .down');
+  function renderLB(){ var c=cards[idx]; if(!c)return; big.src=_src(c); cap.textContent=_code(c)+' · '+_title(c); var s=+c.dataset.score||0; lsc.textContent=s; lup.classList.toggle('on',s>0); ldn.classList.toggle('on',s<0); }
+  function openAt(i){ idx=i; renderLB(); lb.classList.add('open'); }
+  function step(d){ var n=cards.length; if(!n)return; var i=idx; for(var k=0;k<n;k++){ i=(i+d+n)%n; if(_src(cards[i])){ idx=i; break; } } renderLB(); }
+  function closeLB(){ lb.classList.remove('open'); }
+  document.body.addEventListener('click',function(e){ if(!e.target.closest)return; var im=e.target.closest('.frame img'); if(im&&(im.currentSrc||im.getAttribute('src'))){ var c=im.closest('.card'); var i=cards.indexOf(c); if(i>=0) openAt(i); } });
+  lb.addEventListener('click',function(){ closeLB(); });
+  big.onclick=function(e){ e.stopPropagation(); };
+  lb.querySelector('.lbbar').onclick=function(e){ e.stopPropagation(); };
+  lb.querySelector('.prev').onclick=function(e){ e.stopPropagation(); step(-1); };
+  lb.querySelector('.next').onclick=function(e){ e.stopPropagation(); step(1); };
+  lb.querySelector('.lbx').onclick=function(e){ e.stopPropagation(); closeLB(); };
+  lup.onclick=function(e){ e.stopPropagation(); var c=cards[idx]; if(!c)return; var b=c.querySelector('.vote .up'); if(b)b.click(); renderLB(); };
+  ldn.onclick=function(e){ e.stopPropagation(); var c=cards[idx]; if(!c)return; var b=c.querySelector('.vote .down'); if(b)b.click(); renderLB(); };
+  document.addEventListener('keydown',function(e){ if(!lb.classList.contains('open'))return; if(e.key==='Escape')closeLB(); else if(e.key==='ArrowLeft')step(-1); else if(e.key==='ArrowRight')step(1); });
+}
+</script>
+</body>
+</html>

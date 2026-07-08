@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>WFT · B · Hybride stijlen (B1–B20)</title>
+<style>
+  :root{--paper:#FBFCFD;--paper-2:#F0F3F7;--ink:#16191F;--ink-2:#454C5C;--muted:#737B8D;--rule:#E1E5EC;--navy:#1E2761;
+    --lh-red:#AC2E32;--lh-orange:#E1603D;--lh-green:#76B041;
+    --serif:"Charter","Iowan Old Style",Palatino,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;
+    --hatch:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(30,39,97,.05) 8px,rgba(30,39,97,.05) 9px);}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .shell{max-width:1320px;margin:0 auto;padding:clamp(24px,5vw,52px);}
+  .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);font-weight:600;}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4vw,2.7rem);letter-spacing:-.02em;margin:.4em 0 .3em;}
+  .lead{color:var(--ink-2);font-size:1.05rem;max-width:74ch;margin:0 0 6px;}
+  .note{color:var(--muted);font-size:.9rem;max-width:74ch;}
+  .group{margin-top:40px;}
+  .group h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin:0 0 3px;letter-spacing:-.01em;}
+  .group .gsub{color:var(--muted);font-size:.87rem;margin:0 0 16px;}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:620px){.grid{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--rule);background:var(--paper);border-radius:4px;overflow:hidden;box-shadow:0 1px 2px rgba(24,32,64,.05),0 8px 20px -16px rgba(24,32,64,.22);}
+  .frame{position:relative;aspect-ratio:16/9;background:var(--paper-2);background-image:var(--hatch);}
+  .frame img{width:100%;height:100%;object-fit:cover;display:block;}
+  .frame .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;}
+  .frame .code{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:.66rem;font-weight:700;color:#fff;background:var(--lh-orange);padding:2px 8px;border-radius:5px;}
+  .meta{padding:11px 13px 13px;}
+  .meta h3{font-family:var(--serif);font-weight:600;font-size:1.02rem;margin:0;letter-spacing:-.01em;}
+  .meta p{margin:5px 0 0;color:var(--ink-2);font-size:.84rem;line-height:1.5;}
+  footer{margin-top:44px;border-top:1px solid var(--rule);padding-top:18px;color:var(--muted);font-size:.84rem;}
+  .promptbox{margin-top:9px;border-top:1px solid var(--rule);padding-top:8px;}
+  .promptbox summary{cursor:pointer;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);font-weight:700;list-style:none;}
+  .promptbox summary::-webkit-details-marker{display:none;}
+  .promptbox summary::before{content:"\25B8 prompt";}
+  .promptbox[open] summary::before{content:"\25BE prompt";}
+  .promptbox .p{margin-top:7px;font-family:var(--mono);font-size:.68rem;line-height:1.55;color:var(--ink-2);white-space:pre-wrap;background:var(--paper-2);border:1px solid var(--rule);border-radius:6px;padding:9px 10px;}
+  .vote{display:flex;align-items:center;gap:7px;margin-top:10px;}
+  .vote button{font-family:var(--sans);font-size:.95rem;line-height:1;border:1px solid var(--rule);background:var(--paper);border-radius:999px;padding:4px 11px;cursor:pointer;transition:background .15s,border-color .15s,transform .08s;}
+  .vote button:active{transform:scale(.88);}
+  .vote .up:hover{background:color-mix(in srgb,var(--lh-green) 12%,#fff);}
+  .vote .down:hover{background:color-mix(in srgb,var(--lh-red) 12%,#fff);}
+  .vote .up.on{background:color-mix(in srgb,var(--lh-green) 22%,#fff);border-color:var(--lh-green);}
+  .vote .down.on{background:color-mix(in srgb,var(--lh-red) 22%,#fff);border-color:var(--lh-red);}
+  .vote .score{font-family:var(--mono);font-size:.85rem;font-weight:700;min-width:2.2ch;text-align:center;}
+  .vote .reset{margin-left:auto;font-size:.6rem;color:var(--muted);border:0;background:none;text-decoration:underline;cursor:pointer;padding:2px;}
+  .lb{position:fixed;inset:0;background:rgba(16,19,25,.86);display:none;align-items:center;justify-content:center;z-index:300;padding:20px;cursor:zoom-out;}
+  .lb.open{display:flex;}
+  .lb img{max-width:96vw;max-height:90vh;border-radius:6px;box-shadow:0 24px 70px rgba(0,0,0,.55);}
+  .lb .cap{position:fixed;top:14px;left:0;right:0;text-align:center;color:#fff;font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;}
+  .frame img{cursor:zoom-in;}
+  .lb .lbimg{max-width:88vw;max-height:82vh;border-radius:6px;box-shadow:0 24px 70px rgba(0,0,0,.55);}
+  .lbnav{position:fixed;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;font-size:2rem;line-height:1;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .lbnav:hover{background:rgba(255,255,255,.28);}
+  .lbnav.prev{left:18px;} .lbnav.next{right:18px;}
+  .lbx{position:fixed;top:16px;right:18px;width:42px;height:42px;border-radius:50%;font-size:1.2rem;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);cursor:pointer;}
+  .lbbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:rgba(20,22,28,.72);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:999px;color:#fff;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:92vw;}
+  .lbcap{font-family:var(--mono);font-size:1.2rem;font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:4px;}
+  .lbbar .up,.lbbar .down{font-size:1.05rem;line-height:1;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 12px;cursor:pointer;color:#fff;}
+  .lbbar .up.on{background:rgba(118,176,65,.55);border-color:#76B041;}
+  .lbbar .down.on{background:rgba(172,46,50,.6);border-color:#AC2E32;}
+  .lbbar .score{font-family:var(--mono);font-weight:700;min-width:2ch;text-align:center;}
+</style>
+</head>
+<body>
+<div class="shell">
+  <span class="kicker">Groep B · Hybride · B1–B20</span>
+  <h1>B · Hybride stijlen — kies uiteindelijk 4</h1>
+  <p class="lead">Realisme × illustratie/3D, zakelijk en <strong>niet kinderlijk-Pixar</strong>. Zelfde opbouw als A: <strong>Basis-hybride</strong> = echte <em>stijl</em>-varianten op één scène (incl. realistisch×3D-blends); daaronder <em>scène</em>-variatie in de huisstijl <strong>Volwassen 3D</strong> (makkelijk te wisselen).</p>
+  <p class="note">Uit dit geheel kies je er <strong>4</strong> die we volledig uitwerken. (A = realistisch op <code>realistisch.html</code>, C = infomercial op <code>infomercial.html</code>.)</p>
+
+  <div class="group">
+    <h2>Basis-hybride — stijl-varianten</h2>
+    <p class="gsub">Zelfde solo-adviseur-scène, ander medium/blend.</p>
+    <div class="grid">
+      <div class="card"><div class="frame"><span class="code">B1</span><div class="ph">render volgt…</div><img alt="Editorial gouache" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b1.jpg"></div><div class="meta"><h3>Editorial Gouache</h3><p>Geschilderde redactionele illustratie, lijnwerk.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B2</span><div class="ph">render volgt…</div><img alt="Cinematisch geschilderd" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b2.jpg"></div><div class="meta"><h3>Cinematisch Geschilderd</h3><p>Digital painting, penseelstreken, sfeer.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B3</span><div class="ph">render volgt…</div><img alt="Volwassen 3D" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b3.jpg"></div><div class="meta"><h3>Volwassen 3D</h3><p>Gestileerd realistisch 3D, matte, volwassen.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B4</span><div class="ph">render volgt…</div><img alt="Clay 3D" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b4.jpg"></div><div class="meta"><h3>Clay 3D</h3><p>Zachte klei-3D, tactiel en warm.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B5</span><div class="ph">render volgt…</div><img alt="Foto × lijn" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b5.jpg"></div><div class="meta"><h3>Foto × Lijn</h3><p>Echte foto + hand-getekende lijn-overlays.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B6</span><div class="ph">render volgt…</div><img alt="Foto × 3D" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b6.jpg"></div><div class="meta"><h3>Foto × 3D</h3><p>Echte foto + gerenderde 3D-elementen (realistisch×3D).</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B7</span><div class="ph">render volgt…</div><img alt="Semi-realistisch 3D" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b7.jpg"></div><div class="meta"><h3>Semi-realistisch 3D</h3><p>Tussen foto en 3D — levensecht maar gerenderd.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B8</span><div class="ph">render volgt…</div><img alt="Risograph" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b8.jpg"></div><div class="meta"><h3>Risograph</h3><p>Screenprint-textuur, spot-kleuren, hip.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Kantoor mét cliënten</h2>
+    <p class="gsub">Scène-variatie in huisstijl Volwassen 3D.</p>
+    <div class="grid">
+      <div class="card"><div class="frame"><span class="code">B9</span><div class="ph">render volgt…</div><img alt="Adviesgesprek" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b9.jpg"></div><div class="meta"><h3>Adviesgesprek</h3><p>Adviseur tegenover klant-koppel.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B10</span><div class="ph">render volgt…</div><img alt="Handdruk" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b10.jpg"></div><div class="meta"><h3>Handdruk</h3><p>Warme handdruk, aspirationeel.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B11</span><div class="ph">render volgt…</div><img alt="Samen naar scherm" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b11.jpg"></div><div class="meta"><h3>Samen naar scherm</h3><p>Samen naar laptop.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B12</span><div class="ph">render volgt…</div><img alt="Vergaderruimte" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b12.jpg"></div><div class="meta"><h3>Vergaderruimte</h3><p>Brede ruimte, toont omgeving.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Buitenomgeving &amp; locaties</h2>
+    <p class="gsub">Scène-variatie in huisstijl Volwassen 3D.</p>
+    <div class="grid">
+      <div class="card"><div class="frame"><span class="code">B13</span><div class="ph">render volgt…</div><img alt="Kantoorpand" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b13.jpg"></div><div class="meta"><h3>Kantoorpand</h3><p>Modern kantoorgebouw.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B14</span><div class="ph">render volgt…</div><img alt="Woning" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b14.jpg"></div><div class="meta"><h3>Woning</h3><p>Uitnodigende woning.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B15</span><div class="ph">render volgt…</div><img alt="Birdview" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b15.jpg"></div><div class="meta"><h3>Birdview</h3><p>Luchtfoto woonwijk.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B16</span><div class="ph">render volgt…</div><img alt="Straat" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b16.jpg"></div><div class="meta"><h3>Straat</h3><p>Nederlandse woonstraat.</p></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>WFT-objecten</h2>
+    <p class="gsub">Scène-variatie in huisstijl Volwassen 3D.</p>
+    <div class="grid">
+      <div class="card"><div class="frame"><span class="code">B17</span><div class="ph">render volgt…</div><img alt="Bureau met objecten" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b17.jpg"></div><div class="meta"><h3>Bureau met objecten</h3><p>Huismodel, paraplu, munten.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B18</span><div class="ph">render volgt…</div><img alt="Handen met huismodel" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b18.jpg"></div><div class="meta"><h3>Handen &amp; huismodel</h3><p>Handen met huismodel + sleutels.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B19</span><div class="ph">render volgt…</div><img alt="Flat-lay objecten" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b19.jpg"></div><div class="meta"><h3>Flat-lay objecten</h3><p>Top-down: alle WFT-objecten.</p></div></div>
+      <div class="card"><div class="frame"><span class="code">B20</span><div class="ph">render volgt…</div><img alt="Adviseur toont object" data-src="https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/hyb2-b20.jpg"></div><div class="meta"><h3>Adviseur toont object</h3><p>Adviseur presenteert huismodel.</p></div></div>
+    </div>
+  </div>
+
+  <footer>Groep B = 20 hybride opties (B1–B8 = stijl-varianten, B9–B20 = scène-variatie in Volwassen 3D). Daarna kies je er 4 → volledige uitwerking. Beelden via Higgsfield (gpt_image_2) · Lindenhaeghe-palet.</footer>
+</div>
+<script>
+  document.querySelectorAll('img[data-src]').forEach(function(img){var r=new Image();r.onload=function(){img.src=img.getAttribute('data-src');var ph=img.parentElement.querySelector('.ph');if(ph)ph.remove();};r.src=img.getAttribute('data-src');});
+</script>
+<script>
+(function(){
+  var SB="Scene: solo advisor at a desk with a laptop in a modern advisory office; red mug/notebook + orange accent.";
+  var H3="A tasteful STYLIZED 3D RENDER, realistic-but-stylized, adult professional proportions, soft realistic materials/lighting, matte finish, clean corporate 3D (clearly a 3D render, not a photo, not childish).";
+  var P={
+    B1:"A sophisticated EDITORIAL GOUACHE ILLUSTRATION, painterly gouache texture, confident inked linework, adult realistic proportions, tasteful magazine quality (not a photo/3D). "+SB,
+    B2:"A CINEMATIC DIGITAL PAINTING, semi-realistic, visible confident brushwork, atmospheric depth, rich painterly rendering (not a photo). "+SB,
+    B3:"A clearly STYLIZED 3D CHARACTER RENDER (modern animation-film style, adult & professional, not childish, not a photo), smooth rounded 3D-modelled surfaces, soft 3D shading. "+SB,
+    B4:"A CLAY-RENDER claymation-style 3D illustration, soft matte clay-like surfaces, gentle studio lighting, tactile 3D, adult & tasteful. "+SB,
+    B5:"A MIXED-MEDIA HYBRID: realistic photographic base + clean hand-drawn line-art overlays and drawn icon accents, contemporary editorial (part photo, part drawing). "+SB,
+    B6:"A HYBRID: realistic photograph of the advisor + tasteful glossy 3D-RENDERED elements and 3D icons composited around her, realism x 3D CGI, modern fintech. "+SB,
+    B7:"A SEMI-REALISTIC 3D CGI portrait, lifelike but subtly stylized, smooth realistic materials, between a photograph and a 3D render. "+SB,
+    B8:"A RISOGRAPH SCREENPRINT-style illustration, limited spot-colour palette, grain + slight misregistration, bold shapes, hip editorial (a print, not a photo). "+SB,
+    B9:H3+" Scene: advisor across a table from a client couple, laptop + house model. 3 people.",
+    B10:H3+" Scene: advisor shaking hands warmly with a happy client across a desk. 2 people.",
+    B11:H3+" Scene: advisor + client couple looking at a laptop screen together. 3 people.",
+    B12:H3+" Scene: a wide bright meeting room, advisor + client couple around a table. 3 people.",
+    B13:H3+" Scene: modern Dutch office building exterior, soft daylight. No people.",
+    B14:H3+" Scene: welcoming modern Dutch family house exterior, tidy garden (home/mortgage). No people.",
+    B15:H3+" Scene: high bird's-eye view of a tidy stylized Dutch neighbourhood, houses + greenery. No people.",
+    B16:H3+" Scene: charming Dutch residential street, new-build homes + greenery. No people.",
+    B17:H3+" Scene: advisor desk with house model, umbrella, coins + piggy bank, folder, laptop; advisor behind. Real-looking 3D objects.",
+    B18:H3+" Scene: close-up of the advisor's hands holding a model house + keys over documents.",
+    B19:H3+" Scene: clean top-down of objects: house model, umbrella, calculator, coins, folder, shield badge. No people.",
+    B20:H3+" Scene: advisor smiling, holding up a small model house toward the viewer. 1 person."
+  };
+  boardEnhance(P);
+})();
+function boardEnhance(P){
+  var PAGE=(location.pathname.split('/').pop()||'page');
+  var NOTE="\n\n— Palet (constant): Lindenhaeghe, warm & licht op licht-roze/creme; brand-rood hoofd, coral-oranje 2e, beetje groen, vleugje aubergine; nooit paars-zwaar.\n— No-text (constant): geen tekst/letters/cijfers/logo's · 16:9.";
+  function gs(c){var v=localStorage.getItem('v:'+PAGE+':'+c);return v?(parseInt(v,10)||0):0;}
+  function ss(c,s){localStorage.setItem('v:'+PAGE+':'+c,s);}
+  function resort(g){ if(!g)return; var cs=[].slice.call(g.querySelectorAll('.card'));
+    cs.sort(function(a,b){return (+b.dataset.score)-(+a.dataset.score);}); cs.forEach(function(c){g.appendChild(c);}); }
+  document.querySelectorAll('.card').forEach(function(card){
+    var ce=card.querySelector('.code'); if(!ce)return; var code=ce.textContent.trim();
+    var meta=card.querySelector('.meta'); if(!meta)return;
+    if(P[code]){ var d=document.createElement('details'); d.className='promptbox';
+      var s=document.createElement('summary'); d.appendChild(s);
+      var pv=document.createElement('div'); pv.className='p'; pv.textContent=P[code]+NOTE; d.appendChild(pv); meta.appendChild(d); }
+    var score=gs(code); card.dataset.score=score;
+    var bar=document.createElement('div'); bar.className='vote';
+    var up=document.createElement('button'); up.className='up'; up.type='button'; up.textContent='👍'; up.title='Like (omhoog)';
+    var scr=document.createElement('span'); scr.className='score'; scr.textContent=score;
+    var dn=document.createElement('button'); dn.className='down'; dn.type='button'; dn.textContent='👎'; dn.title='Dislike (omlaag)';
+    var rs=document.createElement('button'); rs.className='reset'; rs.type='button'; rs.textContent='reset';
+    bar.appendChild(up); bar.appendChild(scr); bar.appendChild(dn); bar.appendChild(rs); meta.appendChild(bar);
+    function rend(){var s=+card.dataset.score; scr.textContent=s; up.classList.toggle('on',s>0); dn.classList.toggle('on',s<0);}
+    function set(s){card.dataset.score=s; ss(code,s); rend();}
+    up.onclick=function(){set(+card.dataset.score+1);}; dn.onclick=function(){set(+card.dataset.score-1);}; rs.onclick=function(){set(0);};
+    rend();
+  });
+  /* geen herschikking: kaarten blijven op hun vaste plek */
+  var cards=[].slice.call(document.querySelectorAll('.card'));
+  function _src(card){var im=card.querySelector('.frame img'); return im?(im.currentSrc||im.getAttribute('src')||''):'';}
+  function _code(card){var e=card.querySelector('.code'); return e?e.textContent.trim():'';}
+  function _title(card){var e=card.querySelector('h3'); return e?e.textContent.trim():'';}
+  var idx=-1;
+  var lb=document.createElement('div'); lb.className='lb';
+  lb.innerHTML='<button class="lbx" type="button" title="sluiten">✕</button><button class="lbnav prev" type="button" title="vorige">‹</button><img class="lbimg" alt="vergroot"><button class="lbnav next" type="button" title="volgende">›</button><div class="lbbar"><span class="lbcap"></span><button class="up" type="button" title="Like">👍</button><span class="score">0</span><button class="down" type="button" title="Dislike">👎</button></div>';
+  document.body.appendChild(lb);
+  var big=lb.querySelector('.lbimg'), cap=lb.querySelector('.lbcap'), lup=lb.querySelector('.lbbar .up'), lsc=lb.querySelector('.lbbar .score'), ldn=lb.querySelector('.lbbar .down');
+  function renderLB(){ var c=cards[idx]; if(!c)return; big.src=_src(c); cap.textContent=_code(c)+' · '+_title(c); var s=+c.dataset.score||0; lsc.textContent=s; lup.classList.toggle('on',s>0); ldn.classList.toggle('on',s<0); }
+  function openAt(i){ idx=i; renderLB(); lb.classList.add('open'); }
+  function step(d){ var n=cards.length; if(!n)return; var i=idx; for(var k=0;k<n;k++){ i=(i+d+n)%n; if(_src(cards[i])){ idx=i; break; } } renderLB(); }
+  function closeLB(){ lb.classList.remove('open'); }
+  document.body.addEventListener('click',function(e){ if(!e.target.closest)return; var im=e.target.closest('.frame img'); if(im&&(im.currentSrc||im.getAttribute('src'))){ var c=im.closest('.card'); var i=cards.indexOf(c); if(i>=0) openAt(i); } });
+  lb.addEventListener('click',function(){ closeLB(); });
+  big.onclick=function(e){ e.stopPropagation(); };
+  lb.querySelector('.lbbar').onclick=function(e){ e.stopPropagation(); };
+  lb.querySelector('.prev').onclick=function(e){ e.stopPropagation(); step(-1); };
+  lb.querySelector('.next').onclick=function(e){ e.stopPropagation(); step(1); };
+  lb.querySelector('.lbx').onclick=function(e){ e.stopPropagation(); closeLB(); };
+  lup.onclick=function(e){ e.stopPropagation(); var c=cards[idx]; if(!c)return; var b=c.querySelector('.vote .up'); if(b)b.click(); renderLB(); };
+  ldn.onclick=function(e){ e.stopPropagation(); var c=cards[idx]; if(!c)return; var b=c.querySelector('.vote .down'); if(b)b.click(); renderLB(); };
+  document.addEventListener('keydown',function(e){ if(!lb.classList.contains('open'))return; if(e.key==='Escape')closeLB(); else if(e.key==='ArrowLeft')step(-1); else if(e.key==='ArrowRight')step(1); });
+}
+</script>
+</body>
+</html>
