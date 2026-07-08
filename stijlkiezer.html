@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light">
+<title>WFT · Stijlkiezer — doel → animatiestijl</title><style>
+  :root{--paper:#FBFCFD;--paper-2:#F0F3F7;--ink:#16191F;--ink-2:#454C5C;--muted:#737B8D;--rule:#E1E5EC;--navy:#1E2761;
+    --lh-purple:#3A244C;--lh-red:#AC2E32;--lh-orange:#E1603D;--lh-green:#76B041;
+    --serif:"Charter","Iowan Old Style",Palatino,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;
+    --maxw:1320px;--pad:clamp(18px,4vw,44px);}
+  *{box-sizing:border-box;} body{margin:0;padding-top:12px;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .shell{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);}
+  a{color:var(--navy);} .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);font-weight:600;}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.06;letter-spacing:-.02em;margin:10px 0 8px;}
+  h1 em{font-style:italic;color:var(--lh-red);}
+  .lead{font-family:var(--serif);font-size:clamp(1rem,1.7vw,1.14rem);color:var(--ink-2);max-width:70ch;margin:0 0 4px;}
+
+  /* topnav (gedeeld) */
+  .topnav{position:sticky;top:12px;z-index:100;width:min(100% - 24px,var(--maxw,1320px));margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:9px 10px 9px 20px;border-radius:999px;border:1px solid rgba(22,25,31,.10);background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,255,255,.56));-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 10px 30px rgba(24,32,64,.10);}
+  .nav-brand{font-family:var(--mono);font-size:.8rem;font-weight:600;letter-spacing:.03em;color:var(--ink);text-decoration:none;white-space:nowrap;}
+  .nav-links{display:flex;align-items:center;gap:2px;}
+  .nav-links a{font-size:.82rem;color:var(--ink-2);text-decoration:none;padding:8px 12px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s;}
+  .nav-links a:hover{color:var(--ink);background:rgba(30,39,97,.07);}
+  .nav-links a.active{color:var(--navy);background:rgba(30,39,97,.09);}
+  @media(max-width:720px){.topnav{gap:8px;padding:8px 10px;}.nav-brand{display:none;}.nav-links{gap:0;overflow-x:auto;scrollbar-width:none;}.nav-links::-webkit-scrollbar{display:none;}.nav-links a{padding:7px 9px;font-size:.78rem;}}
+  @media(prefers-reduced-transparency:reduce){.topnav{background:rgba(251,252,253,.98);-webkit-backdrop-filter:none;backdrop-filter:none;}}
+
+  .head{padding:22px 0 6px;}
+  section{margin-top:22px;padding:18px clamp(16px,2.4vw,26px) 22px;border-radius:14px;background:var(--paper-2);border:1px solid var(--rule);}
+  section > h2{font-family:var(--serif);font-weight:600;font-size:1.35rem;margin:0 0 3px;letter-spacing:-.01em;}
+  section > .sub{color:var(--muted);font-size:.86rem;margin:0 0 16px;}
+
+  /* doel-chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--ink-2);background:var(--paper);border:1px solid var(--rule);padding:9px 15px;border-radius:999px;cursor:pointer;transition:all .15s;}
+  .chip:hover{border-color:var(--rule-2,#c7cdd9);color:var(--ink);}
+  .chip.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+
+  /* aanbeveling-paneel */
+  .reco{margin-top:16px;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:0;overflow:hidden;display:none;}
+  .reco.show{display:block;}
+  .reco-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;padding:14px 18px;border-bottom:1px solid var(--rule);background:linear-gradient(90deg,rgba(30,39,97,.05),transparent);}
+  .reco-top .for{font-size:.8rem;color:var(--muted);} .reco-top .goal{font-weight:700;color:var(--ink);}
+  .reco-top .arrow{color:var(--lh-orange);font-weight:700;}
+  .reco-top .pick{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--navy);}
+  .reco-body{padding:14px 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;}
+  .reco-card{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;background:var(--paper);}
+  .reco-card .cat{font-family:var(--serif);font-weight:600;font-size:1rem;margin-bottom:4px;}
+  .reco-card .k{font-size:.82rem;color:var(--ink-2);margin-bottom:8px;}
+  .reco-card .t{display:inline-block;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--lh-green);padding:2px 8px;border-radius:5px;}
+
+  /* stijl-catalogus */
+  .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+  .scard{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--paper);transition:opacity .2s,box-shadow .2s,border-color .2s,transform .2s;}
+  .scard .cat{font-family:var(--serif);font-weight:600;font-size:1.06rem;letter-spacing:-.01em;}
+  .scard .k{color:var(--ink-2);font-size:.88rem;margin:4px 0 10px;}
+  .scard .t{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);}
+  .scard .t b{color:var(--ink-2);font-weight:600;}
+  .catalog.filtered .scard{opacity:.32;}
+  .catalog.filtered .scard.match{opacity:1;border-color:var(--navy);box-shadow:0 8px 24px -14px rgba(30,39,97,.5);transform:translateY(-2px);}
+  .scard .badge{display:none;margin-top:9px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);background:rgba(30,39,97,.09);padding:3px 8px;border-radius:5px;}
+  .catalog.filtered .scard.match .badge{display:inline-block;}
+
+  /* basisstack-tabel */
+  table.stack{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;}
+  table.stack th,table.stack td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--rule);}
+  table.stack th{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);background:var(--paper-2);}
+  table.stack tr:last-child td{border-bottom:0;}
+  table.stack tr.hot td{background:rgba(225,96,61,.09);}
+  table.stack td.keuze{font-weight:600;color:var(--ink);}
+  .reset{margin-left:8px;font-size:.82rem;color:var(--navy);background:none;border:0;cursor:pointer;text-decoration:underline;}
+  footer{padding:26px 0 48px;color:var(--muted);font-size:.84rem;}
+</style></head><body>
+
+<nav class="topnav" aria-label="Paginanavigatie">
+  <a class="nav-brand" href="index.html">WFT · Stijlverkenning</a>
+  <div class="nav-links">
+    <a href="index.html">Overzicht</a>
+    <a href="realistisch.html">Realistisch</a>
+    <a href="hybride.html">Hybride</a>
+    <a href="infomercial.html">Infomercial</a>
+    <a href="presentator.html">Presentator</a>
+    <a href="stijlkiezer.html" class="active">Stijlkiezer</a>
+  </div>
+</nav>
+
+<div class="shell head">
+  <span class="kicker">Hulpmiddel · doel → stijl</span>
+  <h1>Stijl<em>kiezer</em></h1>
+  <p class="lead">Kies je leerdoel en zie meteen welke animatie-/avatarstijl daar het beste bij past — inclusief waaróm en waar je die stijl voor inzet.</p>
+</div>
+
+<main class="shell">
+  <section>
+    <h2>1 · Wat wil je maken?</h2>
+    <p class="sub">Kies een doel. De aanbeveling en de passende stijlen lichten hieronder op. <button class="reset" id="reset" hidden>toon alles</button></p>
+    <div class="chips" id="chips"></div>
+    <div class="reco" id="reco"></div>
+  </section>
+
+  <section>
+    <h2>2 · Alle stijlen</h2>
+    <p class="sub">De hoofdindeling van animatie- en avatarstijlen — kenmerk en beste toepassing.</p>
+    <div class="catalog" id="catalog"></div>
+  </section>
+
+  <section>
+    <h2>3 · Basisstack voor schaalbare e-learning</h2>
+    <p class="sub">Snelle vuistregel per doel.</p>
+    <div style="overflow-x:auto"><table class="stack" id="stack"><thead><tr><th>Doel</th><th>Beste keuze</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</main>
+
+<footer class="shell">WFT · Stijlverkenning — hulpmiddel om doel en stijl te koppelen. Interne verkenning.</footer>
+
+<script>
+const STYLES = [
+  {id:'realavatar', cat:'Realistische video-avatar', kenmerk:'Menselijk, geloofwaardig', toep:'Uitleg, onboarding, gedrag'},
+  {id:'semi',       cat:'Semi-realistische avatar', kenmerk:'Professioneel maar toegankelijk', toep:'Corporate learning'},
+  {id:'2d',         cat:'2D illustratief', kenmerk:'Simpel, snel, schaalbaar', toep:'Theorie, processen'},
+  {id:'whiteboard', cat:'Whiteboard animatie', kenmerk:'Tekenen tijdens uitleg', toep:'Conceptuitleg'},
+  {id:'motion',     cat:'Motion graphics', kenmerk:'Abstracte visuele beweging', toep:'Data/processen'},
+  {id:'3d',         cat:'3D realistisch', kenmerk:'Diepte en simulatie', toep:'Veiligheid, techniek'},
+  {id:'pixar',      cat:'Pixar/cartoon stijl', kenmerk:'Emotioneel en speels', toep:'Soft skills, onboarding'},
+  {id:'hand',       cat:'Handgetekend', kenmerk:'Persoonlijk, menselijk', toep:'Reflectie, storytelling'},
+  {id:'iso',        cat:'Isometrisch', kenmerk:'Zakelijk overzichtelijk', toep:'Processen/systemen'},
+  {id:'screencast', cat:'Screencast / systeemanimatie', kenmerk:'Echte software tonen', toep:'Tooltraining'},
+  {id:'ai',         cat:"AI-gegenereerde scenario's", kenmerk:'Flexibel en snel', toep:'Casuïstiek'},
+  {id:'game',       cat:'Game/simulatie stijl', kenmerk:'Interactief', toep:'Vaardigheidstraining'},
+];
+const GOALS = [
+  {id:'theorie',    doel:'Algemene theorie',    keuze:'2D motion graphics',        styles:['2d','motion']},
+  {id:'uitleg',     doel:'Professionele uitleg', keuze:'Semi-realistische avatars', styles:['semi','realavatar']},
+  {id:'casuistiek', doel:'Casuïstiek',           keuze:"AI-scenario's",             styles:['ai']},
+  {id:'soft',       doel:'Soft skills',          keuze:'Semi-realistisch / cartoon', styles:['pixar','semi']},
+  {id:'compliance', doel:'Compliance',           keuze:'Zakelijk 2D + avatar',      styles:['iso','2d','semi']},
+  {id:'security',   doel:'Security awareness',   keuze:"Simulaties + scenario's",   styles:['game','ai']},
+  {id:'software',   doel:'Softwaretraining',     keuze:'Screencast',                styles:['screencast']},
+  {id:'praktijk',   doel:'Veiligheid / praktijk', keuze:'3D waar nodig',            styles:['3d']},
+];
+const byId = Object.fromEntries(STYLES.map(s=>[s.id,s]));
+
+// catalogus
+const catEl = document.getElementById('catalog');
+catEl.innerHTML = STYLES.map(s=>`<div class="scard" data-id="${s.id}">
+  <div class="cat">${s.cat}</div><div class="k">${s.kenmerk}</div>
+  <div class="t"><b>Beste toepassing:</b> ${s.toep}</div>
+  <div class="badge">past bij je doel</div></div>`).join('');
+
+// basisstack-tabel
+document.querySelector('#stack tbody').innerHTML = GOALS.map(g=>
+  `<tr data-goal="${g.id}"><td>${g.doel}</td><td class="keuze">${g.keuze}</td></tr>`).join('');
+
+// chips
+const chipsEl = document.getElementById('chips');
+chipsEl.innerHTML = GOALS.map(g=>`<button class="chip" data-id="${g.id}">${g.doel}</button>`).join('');
+
+const recoEl = document.getElementById('reco');
+const resetBtn = document.getElementById('reset');
+let active = null;
+
+function select(id){
+  active = active===id ? null : id;
+  // chips
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.id===active));
+  // stack-tabel highlight
+  document.querySelectorAll('#stack tbody tr').forEach(r=>r.classList.toggle('hot', r.dataset.goal===active));
+  resetBtn.hidden = !active;
+  if(!active){ recoEl.classList.remove('show'); catEl.classList.remove('filtered'); clearMatch(); return; }
+  const g = GOALS.find(x=>x.id===active);
+  // aanbeveling
+  recoEl.innerHTML = `<div class="reco-top"><span class="for">Voor</span> <span class="goal">${g.doel}</span> <span class="arrow">→</span> <span class="pick">${g.keuze}</span></div>
+    <div class="reco-body">${g.styles.map(sid=>{const s=byId[sid];return `<div class="reco-card"><div class="cat">${s.cat}</div><div class="k">${s.kenmerk}</div><span class="t">${s.toep}</span></div>`;}).join('')}</div>`;
+  recoEl.classList.add('show');
+  // catalogus filteren
+  catEl.classList.add('filtered');
+  clearMatch();
+  g.styles.forEach(sid=>{const el=catEl.querySelector(`.scard[data-id="${sid}"]`); if(el) el.classList.add('match');});
+}
+function clearMatch(){ catEl.querySelectorAll('.scard.match').forEach(e=>e.classList.remove('match')); }
+
+chipsEl.addEventListener('click', e=>{const b=e.target.closest('.chip'); if(b) select(b.dataset.id);});
+resetBtn.addEventListener('click', ()=>select(active));
+</script>
+</body></html>
