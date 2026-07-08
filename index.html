@@ -29,8 +29,8 @@
   .sb{padding:12px;display:flex;gap:16px;align-items:flex-start;}.sb-scenes{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;}.sb .scn.full{flex:1.15 1 0;min-width:0;margin:0;}@media(max-width:760px){.sb{flex-direction:column;}.sb-scenes{width:100%;}.sb .scn.full{width:100%;margin:0 0 6px;}}
   .scn .sl{font-family:var(--mono);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);font-weight:700;margin-bottom:5px;}
   .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
-  .brg{display:flex;justify-content:center;}
-  .brg .slot{width:66%;} .brg .k{color:var(--lh-orange);}
+  .brg{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:1px 0;}.brg::before{content:"\21B3  transitie";font-family:var(--mono);font-size:.55rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lh-orange);white-space:nowrap;flex:0 0 auto;}
+  .brg .slot{width:42%;max-width:200px;flex:0 0 auto;border:1px dashed rgba(225,96,61,.55);} .brg .k{color:var(--lh-orange);}
   .slot{position:relative;aspect-ratio:16/9;border:1px solid var(--rule);border-radius:5px;background:var(--paper-2);background-image:var(--hatch);overflow:hidden;cursor:zoom-in;}
   .slot img,.slot video{width:100%;height:100%;object-fit:cover;}
   .slot .k{position:absolute;left:4px;bottom:4px;font-family:var(--mono);font-size:.5rem;letter-spacing:.03em;color:var(--muted);background:rgba(251,252,253,.82);border:1px solid var(--rule);padding:1px 4px;border-radius:3px;}
