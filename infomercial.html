@@ -192,7 +192,7 @@ function boardEnhance(P){
   function gs(c){return NET[c]||0;}
   function _refreshAll(){Object.keys(CARDS_BY_CODE).forEach(function(c){var card=CARDS_BY_CODE[c];card.dataset.score=NET[c]||0;if(card._rend)card._rend();});if(typeof lb!=='undefined'&&lb&&lb.classList.contains('open')&&typeof renderLB==='function')renderLB();}
   function _loadVotes(){return sbapi('rpc/wft_votes_agg',{method:'POST',body:JSON.stringify({p_page:PAGE})}).then(function(r){return r.ok?r.json():[];}).then(function(rows){NET={};(rows||[]).forEach(function(row){NET[row.code]=row.net;});_refreshAll();}).catch(function(){});}
-  function _migrate(){var mk='wft_migrated:'+PAGE;if(localStorage.getItem(mk))return Promise.resolve();var mig=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('v:'+PAGE+':')===0){var code=k.slice(('v:'+PAGE+':').length);var old=parseInt(localStorage.getItem(k),10)||0;var v=old>0?1:(old<0?-1:0);if(v!==0){mig.push({page:PAGE,code:code,voter_id:VID,vote:v});OWN[code]=v;}}}if(!mig.length){localStorage.setItem(mk,'1');return Promise.resolve();}return sbapi('wft_votes',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(mig)}).then(function(r){if(r&&r.ok){saveOwn();localStorage.setItem(mk,'1');}}).catch(function(){});}
+  function _migrate(){var mk='wft_migrated:'+PAGE;if(localStorage.getItem(mk))return Promise.resolve();var mig=[];for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('v:'+PAGE+':')===0){var code=k.slice(('v:'+PAGE+':').length);var old=parseInt(localStorage.getItem(k),10)||0;var v=old>0?1:(old<0?-1:0);if(v!==0){mig.push({page:PAGE,code:code,voter_id:VID,vote:v});OWN[code]=v;}}}if(!mig.length){localStorage.setItem(mk,'1');return Promise.resolve();}return Promise.all(mig.map(function(m){return sbapi('rpc/wft_vote',{method:'POST',body:JSON.stringify({p_page:m.page,p_code:m.code,p_voter_id:m.voter_id,p_vote:m.vote})});})).then(function(rs){if(rs.every(function(r){return r&&r.ok;})){saveOwn();localStorage.setItem(mk,'1');}}).catch(function(){});}
   Promise.resolve().then(function(){_migrate().then(_loadVotes);});
   /* ss()/resort() verwijderd — stem-opslag zit in Supabase */
   document.querySelectorAll('.card').forEach(function(card){
@@ -210,7 +210,7 @@ function boardEnhance(P){
     bar.appendChild(up); bar.appendChild(scr); bar.appendChild(dn); bar.appendChild(rs); meta.appendChild(bar);
     CARDS_BY_CODE[code]=card;
     card._rend=function(){scr.textContent=NET[code]||0;up.classList.toggle('on',(OWN[code]||0)>0);dn.classList.toggle('on',(OWN[code]||0)<0);};
-    function vote(v){var o=OWN[code]||0;if(v===o)v=0;NET[code]=(NET[code]||0)+(v-o);if(v===0){delete OWN[code];}else{OWN[code]=v;}saveOwn();card.dataset.score=NET[code]||0;card._rend();if(typeof lb!=='undefined'&&lb&&lb.classList.contains('open'))renderLB();sbapi('wft_votes',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({page:PAGE,code:code,voter_id:VID,vote:v})}).catch(function(){});}
+    function vote(v){var o=OWN[code]||0;if(v===o)v=0;NET[code]=(NET[code]||0)+(v-o);if(v===0){delete OWN[code];}else{OWN[code]=v;}saveOwn();card.dataset.score=NET[code]||0;card._rend();if(typeof lb!=='undefined'&&lb&&lb.classList.contains('open'))renderLB();sbapi('rpc/wft_vote',{method:'POST',body:JSON.stringify({p_page:PAGE,p_code:code,p_voter_id:VID,p_vote:v})}).catch(function(){});}
     up.onclick=function(){vote(1);};dn.onclick=function(){vote(-1);};rs.onclick=function(){vote(0);};
     card._rend();
   });
