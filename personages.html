@@ -27,6 +27,30 @@
   .lb{position:fixed;inset:0;background:rgba(16,19,25,.9);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;} .lb.open{display:flex;}
   .lb img{max-width:92vw;max-height:88vh;border-radius:8px;} .lb button{position:absolute;background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:999px;width:44px;height:44px;font-size:1.3rem;cursor:pointer;}
   .lb .x{top:18px;right:18px;} .lb .prev{left:16px;top:50%;transform:translateY(-50%);} .lb .next{right:16px;top:50%;transform:translateY(-50%);}
+  /* --- stemmen + feedback --- */
+  .vote{display:inline-flex;align-items:center;gap:6px;margin-left:auto;align-self:center;}
+  .vote button{font:inherit;font-size:.9rem;line-height:1;padding:5px 9px;border:1px solid var(--rule);border-radius:8px;background:#fff;cursor:pointer;color:var(--ink-2);transition:border-color .15s,color .15s,background .15s;}
+  .vote button:hover{border-color:var(--navy);color:var(--navy);}
+  .vote .up.on{background:var(--lh-green,#76B041);border-color:var(--lh-green,#76B041);color:#fff;}
+  .vote .down.on{background:var(--lh-red);border-color:var(--lh-red);color:#fff;}
+  .vote .score{font-family:var(--mono);font-size:.9rem;min-width:1.5em;text-align:center;font-variant-numeric:tabular-nums;color:var(--ink);}
+  .vote .reset{font-size:.7rem;padding:5px 7px;color:var(--muted);}
+  .fb{margin-top:10px;}
+  .fb-toggle{font:inherit;font-size:.82rem;font-weight:500;color:var(--navy);background:none;border:0;cursor:pointer;padding:3px 0;}
+  .fb-toggle:hover{text-decoration:underline;}
+  .fb-panel{display:none;margin-top:8px;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;}
+  .fb-panel.open{display:block;}
+  .fb-list{display:flex;flex-direction:column;gap:9px;margin-bottom:12px;}
+  .fb-item{font-size:.88rem;line-height:1.5;}
+  .fb-item .who{font-weight:600;color:var(--ink);} .fb-item .when{color:var(--muted);font-size:.74rem;margin-left:7px;}
+  .fb-item .body{color:var(--ink-2);white-space:pre-wrap;margin-top:1px;}
+  .fb-empty{color:var(--muted);font-size:.84rem;margin-bottom:12px;}
+  .fb-form{display:flex;flex-direction:column;gap:7px;}
+  .fb-form input,.fb-form textarea{font:inherit;font-size:.88rem;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;}
+  .fb-form input{max-width:240px;} .fb-form textarea{min-height:58px;resize:vertical;}
+  .fb-form .frow{display:flex;align-items:center;gap:8px;}
+  .fb-form .send{font-weight:600;color:#fff;background:var(--navy);border:0;cursor:pointer;width:auto;padding:8px 16px;margin-left:auto;}
+  .fb-form .send:disabled{opacity:.5;cursor:default;}
 </style></head><body>
 <nav class="topnav" aria-label="Paginanavigatie"><a class="nav-brand" href="index.html">WFT · Stijlverkenning</a><div class="nav-links"><a href="index.html">Overzicht</a><a href="realistisch.html">Realistisch</a><a href="hybride.html">Hybride</a><a href="infomercial.html">Infomercial</a><a href="presentator.html">Presentator</a><a href="personages.html" class="active">Personages</a><a href="omgevingen.html">Omgevingen</a><a href="stijlkiezer.html">Stijlkiezer</a></div></nav>
 <header class="mast shell"><span class="kicker">Personages · 10 gezichten</span><h1>Personages</h1><p class="lead">Consistente, fotorealistische personages voor de WFT-producties — zakelijk, toegankelijk, vriendelijk. Elk 6 foto's (hoeken + full body). Klik voor groot.</p></header>
@@ -46,6 +70,57 @@
   lb.addEventListener("click",function(e){if(e.target===lb)close();});
   lb.querySelector(".x").onclick=close; lb.querySelector(".prev").onclick=function(e){e.stopPropagation();step(-1);}; lb.querySelector(".next").onclick=function(e){e.stopPropagation();step(1);};
   document.addEventListener("keydown",function(e){if(!lb.classList.contains("open"))return;if(e.key==="Escape")close();else if(e.key==="ArrowLeft")step(-1);else if(e.key==="ArrowRight")step(1);});
+})();
+</script>
+<script>
+/* Stemmen (wft_vote/agg) + zichtbare feedback (wft_feedback_add/list) — per groep (.persona / .cat). */
+(function(){
+  var PAGE=(location.pathname.split('/').pop()||'page');
+  var SB_URL="https://fuesnaztbyhygyladlbv.supabase.co",
+      SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1ZXNuYXp0YnloeWd5bGFkbGJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NjE2NzgsImV4cCI6MjA5NTAzNzY3OH0.9A65Xuhlhgao8j8DktTjkBnYbRk57fg8CsW0HbqsAxw";
+  var VID=localStorage.getItem('wft_vid');if(!VID){VID=(self.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now()+'-'+Math.random());localStorage.setItem('wft_vid',VID);}
+  var AUTHOR=localStorage.getItem('wft_author')||'';
+  function sbapi(q,o){o=o||{};return fetch(SB_URL+'/rest/v1/'+q,Object.assign({},o,{headers:Object.assign({apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},o.headers||{})}));}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function ago(ts){var d=(Date.now()-new Date(ts).getTime())/1000;if(d<60)return'zojuist';if(d<3600)return Math.floor(d/60)+' min';if(d<86400)return Math.floor(d/3600)+' u';return Math.floor(d/86400)+' d';}
+  var NET={},OWN={},OWNKEY='wft_own:'+PAGE,U={};
+  try{OWN=JSON.parse(localStorage.getItem(OWNKEY)||'{}')||{};}catch(e){OWN={};}
+  function saveOwn(){try{localStorage.setItem(OWNKEY,JSON.stringify(OWN));}catch(e){}}
+  [].slice.call(document.querySelectorAll('.persona, .cat')).forEach(function(g){
+    var head=g.querySelector('.phead, .chead'); var sh=g.querySelector('.shot[data-g]'); if(!head||!sh)return;
+    var code=sh.dataset.g; var rec=U[code]={items:[]};
+    var bar=document.createElement('div');bar.className='vote';
+    var up=document.createElement('button');up.className='up';up.type='button';up.textContent='👍';up.title='Vind ik goed';
+    var scr=document.createElement('span');scr.className='score';scr.textContent='0';
+    var dn=document.createElement('button');dn.className='down';dn.type='button';dn.textContent='👎';dn.title='Vind ik niet goed';
+    var rs=document.createElement('button');rs.className='reset';rs.type='button';rs.textContent='reset';rs.title='Stem wissen';
+    bar.appendChild(up);bar.appendChild(scr);bar.appendChild(dn);bar.appendChild(rs);head.appendChild(bar);
+    rec.rend=function(){scr.textContent=NET[code]||0;up.classList.toggle('on',(OWN[code]||0)>0);dn.classList.toggle('on',(OWN[code]||0)<0);};
+    function vote(v){var o=OWN[code]||0;if(v===o)v=0;NET[code]=(NET[code]||0)+(v-o);if(v===0)delete OWN[code];else OWN[code]=v;saveOwn();rec.rend();sbapi('rpc/wft_vote',{method:'POST',body:JSON.stringify({p_page:PAGE,p_code:code,p_voter_id:VID,p_vote:v})}).catch(function(){});}
+    up.onclick=function(){vote(1);};dn.onclick=function(){vote(-1);};rs.onclick=function(){vote(0);};rec.rend();
+    var fb=document.createElement('div');fb.className='fb';
+    var tog=document.createElement('button');tog.className='fb-toggle';tog.type='button';tog.textContent='💬 Feedback';
+    var panel=document.createElement('div');panel.className='fb-panel';
+    var list=document.createElement('div');list.className='fb-list';
+    var empty=document.createElement('div');empty.className='fb-empty';empty.textContent='Nog geen feedback — deel de eerste.';
+    var form=document.createElement('div');form.className='fb-form';
+    var frow=document.createElement('div');frow.className='frow';
+    var nm=document.createElement('input');nm.type='text';nm.placeholder='Je naam (optioneel)';nm.value=AUTHOR;nm.maxLength=40;frow.appendChild(nm);
+    var ta=document.createElement('textarea');ta.placeholder='Schrijf je feedback…';ta.maxLength=1000;
+    var send=document.createElement('button');send.className='send';send.type='button';send.textContent='Plaats';
+    form.appendChild(frow);form.appendChild(ta);form.appendChild(send);
+    panel.appendChild(list);panel.appendChild(empty);panel.appendChild(form);
+    fb.appendChild(tog);fb.appendChild(panel);
+    g.insertBefore(fb,head.nextSibling);
+    tog.onclick=function(){panel.classList.toggle('open');};
+    rec.render=function(){var it=rec.items;list.innerHTML='';empty.style.display=it.length?'none':'block';it.forEach(function(x){var d=document.createElement('div');d.className='fb-item';d.innerHTML='<span class="who">'+esc(x.author||'Anoniem')+'</span><span class="when">'+ago(x.created_at)+'</span><div class="body">'+esc(x.body)+'</div>';list.appendChild(d);});tog.textContent='💬 Feedback'+(it.length?' ('+it.length+')':'');};
+    rec.render();
+    send.onclick=function(){var body=ta.value.trim();if(!body)return;var author=nm.value.trim();send.disabled=true;
+      sbapi('rpc/wft_feedback_add',{method:'POST',body:JSON.stringify({p_page:PAGE,p_code:code,p_voter_id:VID,p_author:author||null,p_body:body})})
+      .then(function(r){if(r.ok){if(author){AUTHOR=author;try{localStorage.setItem('wft_author',author);}catch(e){}}rec.items.push({author:author||null,body:body,created_at:new Date().toISOString()});rec.render();ta.value='';}}).catch(function(){}).then(function(){send.disabled=false;});};
+  });
+  sbapi('rpc/wft_votes_agg',{method:'POST',body:JSON.stringify({p_page:PAGE})}).then(function(r){return r.ok?r.json():[];}).then(function(rows){NET={};(rows||[]).forEach(function(x){NET[x.code]=x.net;});Object.keys(U).forEach(function(c){U[c].rend&&U[c].rend();});}).catch(function(){});
+  sbapi('rpc/wft_feedback_list',{method:'POST',body:JSON.stringify({p_page:PAGE})}).then(function(r){return r.ok?r.json():[];}).then(function(rows){(rows||[]).forEach(function(x){if(U[x.code])U[x.code].items.push({author:x.author,body:x.body,created_at:x.created_at});});Object.keys(U).forEach(function(c){U[c].render&&U[c].render();});}).catch(function(){});
 })();
 </script>
 </body></html>
