@@ -135,7 +135,11 @@
   function makeItem(file, u, NET, own){
     var item=document.createElement('div'); item.className='item';
     var th=document.createElement('div'); th.className='thumb';
-    if(u.img){var im=document.createElement('img'); im.loading='lazy'; im.src=u.img; im.alt=u.label; th.appendChild(im); th.onclick=function(){openLB(u.img);};}
+    function placeholder(){var ph=document.createElement('div'); ph.style.cssText='display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:.78rem;font-family:var(--mono)'; ph.textContent='render volgt…'; return ph;}
+    if(u.img){var im=document.createElement('img'); im.loading='lazy'; im.alt=u.label;
+      im.onerror=function(){if(im.parentNode)im.parentNode.removeChild(im); th.insertBefore(placeholder(), th.firstChild); th.style.cursor='default'; th.onclick=null;};
+      im.src=u.img; th.appendChild(im); th.onclick=function(){openLB(u.img);};
+    } else { th.appendChild(placeholder()); th.style.cursor='default'; }
     var tag=document.createElement('span'); tag.className='tag'; tag.textContent=u.code; th.appendChild(tag);
     item.appendChild(th);
     var body=document.createElement('div'); body.className='body';
