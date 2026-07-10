@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light">
+<title>WFT · Afgekeurd</title><style>
+  :root{--paper:#FBFCFD;--paper-2:#F0F3F7;--ink:#16191F;--ink-2:#454C5C;--muted:#737B8D;--rule:#E1E5EC;--navy:#1E2761;--lh-red:#AC2E32;--lh-green:#76B041;
+    --serif:"Charter","Iowan Old Style",Palatino,Georgia,serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;--mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,monospace;--maxw:1320px;--pad:clamp(18px,4vw,44px);}
+  *{box-sizing:border-box;} body{margin:0;padding-top:12px;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  img{max-width:100%;display:block;} .shell{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad);} a{color:var(--navy);}
+  header.mast{padding:26px 0 6px;} .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1.05;letter-spacing:-.02em;margin:8px 0 8px;}
+  .lead{font-family:var(--serif);font-size:clamp(1.02rem,2vw,1.2rem);color:var(--ink-2);max-width:70ch;margin:0 0 4px;}
+  .back{display:inline-block;margin-top:14px;font-size:.85rem;color:var(--navy);text-decoration:none;} .back:hover{text-decoration:underline;}
+  .pagegroup{margin-top:34px;} .pagehead{font-family:var(--serif);font-weight:600;font-size:1.5rem;margin:0 0 2px;letter-spacing:-.01em;}
+  .pagehead .cnt{font-family:var(--mono);font-size:.72rem;font-weight:700;color:#fff;background:var(--lh-red);padding:2px 8px;border-radius:6px;vertical-align:middle;margin-left:10px;}
+  .sec{margin-top:16px;padding:14px clamp(12px,2vw,20px) 18px;border-radius:14px;background:var(--paper-2);border:1px solid var(--rule);}
+  .sechead{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);margin:0 0 12px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+  .item{background:#fff;border:1px solid var(--rule);border-radius:10px;overflow:hidden;box-shadow:0 1px 2px rgba(24,32,64,.05);display:flex;flex-direction:column;}
+  .thumb{position:relative;aspect-ratio:16/9;background:var(--paper-2);cursor:zoom-in;overflow:hidden;}
+  .thumb img{width:100%;height:100%;object-fit:cover;} .thumb .tag{position:absolute;left:6px;bottom:6px;font-family:var(--mono);font-size:.6rem;font-weight:700;background:rgba(16,19,25,.72);color:#fff;padding:2px 6px;border-radius:5px;}
+  .body{padding:9px 11px 11px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .ttl{font-size:.92rem;font-weight:600;line-height:1.3;}
+  .row{display:flex;align-items:center;gap:8px;margin-top:auto;}
+  .net{font-family:var(--mono);font-size:.78rem;color:var(--lh-red);font-weight:700;}
+  .vote{display:inline-flex;align-items:center;gap:5px;margin-left:auto;}
+  .vote button{font:inherit;font-size:.82rem;line-height:1;padding:4px 8px;border:1px solid var(--rule);border-radius:7px;background:#fff;cursor:pointer;color:var(--ink-2);transition:.13s;}
+  .vote button:hover{border-color:var(--navy);color:var(--navy);}
+  .vote .up.on{background:var(--lh-green);border-color:var(--lh-green);color:#fff;} .vote .down.on{background:var(--lh-red);border-color:var(--lh-red);color:#fff;}
+  .vote .score{font-family:var(--mono);font-size:.8rem;min-width:1.3em;text-align:center;font-variant-numeric:tabular-nums;}
+  .empty,.loading{color:var(--muted);font-size:1rem;padding:40px 0;text-align:center;}
+  footer{padding:30px 0 54px;color:var(--muted);font-size:.86rem;margin-top:30px;border-top:1px solid var(--rule);}
+  .lb{position:fixed;inset:0;background:rgba(16,19,25,.9);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;} .lb.open{display:flex;}
+  .lb img{max-width:94vw;max-height:90vh;border-radius:8px;}
+</style></head><body>
+<header class="mast shell">
+  <span class="kicker">Archief · niet-gekozen opties</span>
+  <h1>Afgekeurd</h1>
+  <p class="lead">Alles met een netto <strong>👎 (−1 of lager)</strong> verhuist automatisch hierheen — gegroepeerd per pagina en sectie. Zo blijven de keuze-pagina's schoon, maar kun je altijd terug naar wat er was. Stem hier 👍 om iets te herstellen.</p>
+  <a class="back" href="index.html">← Terug naar het overzicht</a>
+</header>
+<main class="shell">
+  <div id="out"><p class="loading">Afgekeurde opties laden…</p></div>
+</main>
+<footer class="shell">WFT · Stijlverkenning — afgekeurd-archief. Leeg = niets afgekeurd. Stem 👍 om te herstellen.</footer>
+<div class="lb" id="lb"><img alt="vergroot"></div>
+<script>
+(function(){
+  var SB_URL="https://fuesnaztbyhygyladlbv.supabase.co",
+      SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ1ZXNuYXp0YnloeWd5bGFkbGJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NjE2NzgsImV4cCI6MjA5NTAzNzY3OH0.9A65Xuhlhgao8j8DktTjkBnYbRk57fg8CsW0HbqsAxw";
+  var VID=localStorage.getItem('wft_vid');if(!VID){VID=(self.crypto&&crypto.randomUUID)?crypto.randomUUID():(Date.now()+'-'+Math.random());localStorage.setItem('wft_vid',VID);}
+  function sbapi(q,o){o=o||{};return fetch(SB_URL+'/rest/v1/'+q,Object.assign({},o,{headers:Object.assign({apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},o.headers||{})}));}
+  function getOwn(pg){try{return JSON.parse(localStorage.getItem('wft_own:'+pg)||'{}')||{};}catch(e){return {};}}
+  function saveOwn(pg,o){try{localStorage.setItem('wft_own:'+pg,JSON.stringify(o));}catch(e){}}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  var PAGES=[
+    {file:'realistisch.html',label:'Realistisch'},
+    {file:'hybride.html',label:'Hybride'},
+    {file:'infomercial.html',label:'Infomercial'},
+    {file:'presentator.html',label:'Presentator'},
+    {file:'personages.html',label:'Personages'},
+    {file:'omgevingen.html',label:'Omgevingen'}
+  ];
+
+  function parseUnits(doc){
+    var units=[];
+    if(doc.querySelector('.cat')){
+      doc.querySelectorAll('.cat').forEach(function(cat){
+        var sh=cat.querySelector('.shot[data-g]'); if(!sh)return;
+        var h2=cat.querySelector('.chead h2'); var label=h2?h2.textContent.trim():sh.dataset.g;
+        var im=cat.querySelector('.shot img');
+        units.push({code:sh.dataset.g,label:label,section:label,img:im?(im.getAttribute('src')||''):''});
+      });
+    } else if(doc.querySelector('.persona')){
+      doc.querySelectorAll('.persona').forEach(function(p){
+        var sh=p.querySelector('.shot[data-g]'); if(!sh)return;
+        var h2=p.querySelector('.phead h2'); var label=h2?h2.textContent.trim():sh.dataset.g;
+        var grp=p.closest('.group'); var gh=grp?grp.querySelector('.ghead'):null;
+        var im=p.querySelector('.shot img');
+        units.push({code:sh.dataset.g,label:label,section:gh?gh.textContent.trim():'Personages',img:im?(im.getAttribute('src')||''):''});
+      });
+    } else {
+      doc.querySelectorAll('.card').forEach(function(card){
+        var ce=card.querySelector('.code'); if(!ce)return;
+        var h3=card.querySelector('h3'); var label=h3?h3.textContent.trim():ce.textContent.trim();
+        var grp=card.closest('.group'); var gh=grp?grp.querySelector('h2'):null;
+        var im=card.querySelector('.frame img')||card.querySelector('img');
+        units.push({code:ce.textContent.trim(),label:label,section:gh?gh.textContent.trim():'',img:im?(im.getAttribute('data-src')||im.getAttribute('src')||''):''});
+      });
+    }
+    return units;
+  }
+
+  var lb=document.getElementById('lb'),lbimg=lb.querySelector('img');
+  lb.addEventListener('click',function(){lb.classList.remove('open');lbimg.src='';});
+  function openLB(src){if(!src)return;lbimg.src=src;lb.classList.add('open');}
+
+  Promise.all(PAGES.map(function(pg){
+    return fetch(pg.file).then(function(r){return r.text();}).then(function(html){
+      var doc=new DOMParser().parseFromString(html,'text/html');
+      var units=parseUnits(doc);
+      return sbapi('rpc/wft_votes_agg',{method:'POST',body:JSON.stringify({p_page:pg.file})})
+        .then(function(r){return r.ok?r.json():[];})
+        .then(function(rows){var NET={};(rows||[]).forEach(function(x){NET[x.code]=x.net;});
+          var rej=units.filter(function(u){return (NET[u.code]||0)<=-1;}).map(function(u){u.net=NET[u.code]||0;return u;});
+          return {pg:pg,rej:rej,NET:NET};
+        });
+    }).catch(function(){return {pg:pg,rej:[],NET:{}};});
+  })).then(render).catch(function(){document.getElementById('out').innerHTML='<p class="empty">Kon de afgekeurde opties niet laden.</p>';});
+
+  function render(results){
+    var out=document.getElementById('out'); out.innerHTML='';
+    var total=0;
+    results.forEach(function(res){
+      if(!res.rej.length)return; total+=res.rej.length;
+      var own=getOwn(res.pg.file);
+      var pgDiv=document.createElement('div'); pgDiv.className='pagegroup';
+      var ph=document.createElement('h2'); ph.className='pagehead';
+      ph.innerHTML=esc(res.pg.label)+'<span class="cnt">'+res.rej.length+'</span>';
+      pgDiv.appendChild(ph);
+      // groepeer per sectie
+      var bySec={},order=[];
+      res.rej.forEach(function(u){ if(!bySec[u.section]){bySec[u.section]=[];order.push(u.section);} bySec[u.section].push(u); });
+      order.forEach(function(sec){
+        var secDiv=document.createElement('div'); secDiv.className='sec';
+        if(sec){var sh=document.createElement('div'); sh.className='sechead'; sh.textContent=sec; secDiv.appendChild(sh);}
+        var grid=document.createElement('div'); grid.className='grid';
+        bySec[sec].forEach(function(u){ grid.appendChild(makeItem(res.pg.file, u, res.NET, own)); });
+        secDiv.appendChild(grid); pgDiv.appendChild(secDiv);
+      });
+      out.appendChild(pgDiv);
+    });
+    if(!total) out.innerHTML='<p class="empty">Nog niets afgekeurd. 🎉</p>';
+  }
+
+  function makeItem(file, u, NET, own){
+    var item=document.createElement('div'); item.className='item';
+    var th=document.createElement('div'); th.className='thumb';
+    if(u.img){var im=document.createElement('img'); im.loading='lazy'; im.src=u.img; im.alt=u.label; th.appendChild(im); th.onclick=function(){openLB(u.img);};}
+    var tag=document.createElement('span'); tag.className='tag'; tag.textContent=u.code; th.appendChild(tag);
+    item.appendChild(th);
+    var body=document.createElement('div'); body.className='body';
+    var ttl=document.createElement('div'); ttl.className='ttl'; ttl.textContent=u.label; body.appendChild(ttl);
+    var row=document.createElement('div'); row.className='row';
+    var net=document.createElement('span'); net.className='net';
+    var bar=document.createElement('div'); bar.className='vote';
+    var up=document.createElement('button'); up.className='up'; up.type='button'; up.textContent='👍'; up.title='Herstellen (stem omhoog)';
+    var scr=document.createElement('span'); scr.className='score';
+    var dn=document.createElement('button'); dn.className='down'; dn.type='button'; dn.textContent='👎';
+    var rs=document.createElement('button'); rs.className='reset'; rs.type='button'; rs.textContent='reset'; rs.title='Mijn stem wissen';
+    bar.appendChild(up); bar.appendChild(scr); bar.appendChild(dn); bar.appendChild(rs);
+    row.appendChild(net); row.appendChild(bar); body.appendChild(row); item.appendChild(body);
+    function draw(){var n=NET[u.code]||0; scr.textContent=n; net.textContent='netto '+n; up.classList.toggle('on',(own[u.code]||0)>0); dn.classList.toggle('on',(own[u.code]||0)<0);}
+    draw();
+    function vote(v){var o=own[u.code]||0; if(v===o)v=0; NET[u.code]=(NET[u.code]||0)+(v-o); if(v===0)delete own[u.code]; else own[u.code]=v; saveOwn(file,own); draw();
+      sbapi('rpc/wft_vote',{method:'POST',body:JSON.stringify({p_page:file,p_code:u.code,p_voter_id:VID,p_vote:v})}).catch(function(){});
+      if((NET[u.code]||0)>-1){ item.style.transition='opacity .3s'; item.style.opacity='.4'; item.title='Hersteld — verschijnt weer op de hoofdpagina; verdwijnt hier bij verversen.'; }
+    }
+    up.onclick=function(){vote(1);}; dn.onclick=function(){vote(-1);}; rs.onclick=function(){vote(0);};
+    return item;
+  }
+})();
+</script>
+</body></html>
