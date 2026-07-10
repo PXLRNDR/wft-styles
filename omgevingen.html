@@ -32,8 +32,8 @@
   .vote .score{font-family:var(--mono);font-size:.9rem;min-width:1.5em;text-align:center;font-variant-numeric:tabular-nums;color:var(--ink);}
   .vote .reset{font-size:.7rem;padding:5px 7px;color:var(--muted);}
   .fb{margin-top:10px;}
-  .fb-toggle{font:inherit;font-size:.82rem;font-weight:500;color:var(--navy);background:none;border:0;cursor:pointer;padding:3px 0;}
-  .fb-toggle:hover{text-decoration:underline;}
+  .fb-toggle{font:inherit;font-size:.84rem;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--navy);border-radius:8px;cursor:pointer;padding:6px 13px;display:inline-flex;align-items:center;align-self:center;gap:6px;transition:background .15s,color .15s;}
+  .fb-toggle:hover{background:var(--navy);color:#fff;}
   .fb-panel{display:none;margin-top:8px;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#fff;}
   .fb-panel.open{display:block;}
   .fb-list{display:flex;flex-direction:column;gap:9px;margin-bottom:12px;}
@@ -114,7 +114,7 @@
     var send=document.createElement('button');send.className='send';send.type='button';send.textContent='Plaats';
     form.appendChild(frow);form.appendChild(ta);form.appendChild(send);
     panel.appendChild(list);panel.appendChild(empty);panel.appendChild(form);
-    fb.appendChild(tog);fb.appendChild(panel);
+    head.appendChild(tog);fb.appendChild(panel);
     g.insertBefore(fb,head.nextSibling);
     tog.onclick=function(){panel.classList.toggle('open');};
     rec.render=function(){var it=rec.items;list.innerHTML='';empty.style.display=it.length?'none':'block';it.forEach(function(x){var d=document.createElement('div');d.className='fb-item';d.innerHTML='<span class="who">'+esc(x.author||'Anoniem')+'</span><span class="when">'+ago(x.created_at)+'</span><div class="body">'+esc(x.body)+'</div>';list.appendChild(d);});tog.textContent='💬 Feedback'+(it.length?' ('+it.length+')':'');};
