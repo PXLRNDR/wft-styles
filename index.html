@@ -75,9 +75,6 @@
   </div>
 </nav>
 
-<div class="verbar"><div class="shell verbar-in"><span class="lab">Versie</span>
-<div class="seg"><button id="bv1" class="on">Versie 1 &middot; huidig</button><button id="bv2">Versie 2 &middot; update</button></div>
-<span class="hint">Update = frame-chaining (doorlopend, gelijk volume) voor 9 stijlen &middot; overige blijven v1.</span></div></div>
 <header class="mast"><div class="shell mast-inner">
 <span class="kicker">Fase 2 · uitwerking gekozen stijlen</span>
 <div class="swatches" title="Lindenhaeghe-palet"><span style="background:#3A244C"></span><span style="background:#AC2E32"></span><span style="background:#E1603D"></span><span style="background:#76B041"></span><span style="background:#6A418B"></span><span style="background:#F3EDEB"></span></div>
@@ -87,7 +84,7 @@
 <footer class="shell"><p>Fase 2 · 16 gekozen stijlen · volledig storyboard (start/eind/clip + bruggen). Losse boards: <a href="realistisch.html">A</a> · <a href="hybride.html">B</a> · <a href="infomercial.html">C</a> · <a href="presentator.html">P</a>.</p></footer>
 <div class="lbx" id="lbx"></div>
 <script>
-var cur='v1';
+var cur='v2';
 function clearSlot(s){ var m=s.querySelector('img,video'); if(m)m.remove(); var ph=s.querySelector('.ph'); if(ph)ph.remove(); }
 function hydrate(s){
   var v2=s.getAttribute('data-v2');
@@ -106,11 +103,7 @@ function hydrate(s){
     img.src=src; }
 }
 function renderAll(){ document.querySelectorAll('.slot[data-v1]').forEach(function(s){ clearSlot(s); hydrate(s); }); }
-function setVer(v){ cur=v; document.body.classList.toggle('showv2', v==='v2');
-  document.getElementById('bv1').classList.toggle('on',v==='v1');
-  document.getElementById('bv2').classList.toggle('on',v==='v2'); renderAll(); }
-document.getElementById('bv1').addEventListener('click',function(){setVer('v1');});
-document.getElementById('bv2').addEventListener('click',function(){setVer('v2');});
+document.body.classList.add('showv2');
 renderAll();
 var lbx=document.getElementById('lbx');
 document.body.addEventListener('click',function(e){
