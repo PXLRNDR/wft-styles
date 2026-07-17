@@ -67,6 +67,52 @@
   table.stack td.keuze{font-weight:600;color:var(--ink);}
   .reset{margin-left:8px;font-size:.82rem;color:var(--navy);background:none;border:0;cursor:pointer;text-decoration:underline;}
   footer{padding:26px 0 48px;color:var(--muted);font-size:.84rem;}
+
+  /* ===== merk-laag (uit doelgroepen-overzicht) ===== */
+  /* domein-accenten */
+  :root{--fin:#116466;--ziek:#b8730c;--comp:#3a4a8c;--socfin:#2f7a4d;--soc:#a8446a;}
+
+  /* merk-chips (kleur-gecodeerd per domein) */
+  .brandchips{display:flex;flex-wrap:wrap;gap:8px;}
+  .brandchip{display:inline-flex;align-items:center;gap:8px;--bc:var(--navy);
+    font-family:var(--sans);font-size:.9rem;font-weight:600;color:var(--ink-2);
+    background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--bc);
+    padding:9px 14px;border-radius:10px;cursor:pointer;transition:all .15s;}
+  .brandchip:hover{color:var(--ink);border-color:color-mix(in srgb,var(--bc) 45%,var(--rule));}
+  .brandchip .bdot{width:9px;height:9px;border-radius:3px;background:var(--bc);flex:0 0 auto;}
+  .brandchip .btag{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+  .brandchip.on{background:color-mix(in srgb,var(--bc) 10%,var(--paper));border-color:var(--bc);color:var(--ink);box-shadow:0 6px 18px -12px var(--bc);}
+  .brandchip.on .btag{color:var(--bc);}
+
+  /* merk-paneel (leunt op .reco-styling) */
+  .brand-panel{margin-top:16px;background:var(--paper);border:1px solid var(--rule);border-left:4px solid var(--bc,var(--navy));border-radius:12px;overflow:hidden;display:none;}
+  .brand-panel.show{display:block;}
+  .bp-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 18px;border-bottom:1px solid var(--rule);background:color-mix(in srgb,var(--bc) 6%,transparent);}
+  .bp-dot{width:11px;height:11px;border-radius:3px;background:var(--bc);flex:0 0 auto;}
+  .bp-domein{font-family:var(--mono);font-size:.64rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--bc);}
+  .bp-naam{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+  .bp-tag{font-family:var(--mono);font-size:.58rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--bc);padding:3px 8px;border-radius:5px;}
+  .brand-source{margin-left:auto;font-size:.82rem;font-weight:600;color:var(--bc);text-decoration:none;border:1px solid color-mix(in srgb,var(--bc) 40%,var(--rule));padding:6px 13px;border-radius:999px;white-space:nowrap;transition:background .15s;}
+  .brand-source:hover{background:color-mix(in srgb,var(--bc) 10%,transparent);}
+  .bp-body{padding:14px 18px 16px;}
+  .bp-dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;}
+  .bp-dl dt{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding-top:2px;white-space:nowrap;}
+  .bp-dl dd{margin:0;font-size:.92rem;color:var(--ink);}
+  .bp-dl dd .muted{color:var(--ink-2);}
+  .bp-note{margin-top:14px;display:flex;gap:9px;align-items:flex-start;padding:11px 14px;background:rgba(172,46,50,.08);border:1px solid rgba(172,46,50,.25);border-radius:9px;font-size:.86rem;color:var(--ink-2);}
+  .bp-note b{color:var(--lh-red);font-weight:700;}
+  .bp-grid{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;}
+  @media(max-width:640px){.bp-grid{grid-template-columns:1fr;}}
+  .bp-k{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 4px;}
+  .bp-v{font-size:.9rem;color:var(--ink);margin:0 0 10px;}
+  ul.do,ul.dont{margin:0 0 10px;padding:0;list-style:none;font-size:.88rem;}
+  ul.do li,ul.dont li{padding-left:20px;position:relative;margin-bottom:3px;color:var(--ink-2);}
+  ul.do li::before{content:"✓";position:absolute;left:0;color:var(--socfin);font-weight:700;}
+  ul.dont li::before{content:"✗";position:absolute;left:0;color:var(--lh-red);font-weight:700;}
+  .bp-cats{margin-top:16px;padding-top:14px;border-top:1px dashed var(--rule);}
+  .bp-catchips{margin-top:8px;}
+  .catchip.on{background:var(--bc);border-color:var(--bc);color:#fff;}
+  .brand-reco{margin-top:12px;}
 </style></head><body>
 
 <nav class="topnav" aria-label="Paginanavigatie">
@@ -84,25 +130,32 @@
 <div class="shell head">
   <span class="kicker">Hulpmiddel · doel → stijl</span>
   <h1>Stijl<em>kiezer</em></h1>
-  <p class="lead">Kies je leerdoel en zie meteen welke animatie-/avatarstijl daar het beste bij past — inclusief waaróm en waar je die stijl voor inzet.</p>
+  <p class="lead">Begin bij je <strong>merk &amp; opleiding</strong> — of bij een leerdoel — en zie meteen welke animatie-/avatarstijl, persona en omgeving daarbij passen, inclusief waaróm en waar je die inzet.</p>
 </div>
 
 <main class="shell">
   <section>
-    <h2>1 · Wat wil je maken?</h2>
+    <h2>1 · Kies je merk &amp; opleiding</h2>
+    <p class="sub">Kies je label. Je ziet de doelgroep, de opleidingscategorieën en een concrete aanwijzing — stijl, persona en omgeving — voor de animaties. <button class="reset" id="brandreset" hidden>wis merk</button></p>
+    <div class="brandchips" id="brandchips"></div>
+    <div class="brand-panel" id="brandpanel"></div>
+  </section>
+
+  <section>
+    <h2>2 · Wat wil je maken?</h2>
     <p class="sub">Kies een doel. De aanbeveling en de passende stijlen lichten hieronder op. <button class="reset" id="reset" hidden>toon alles</button></p>
     <div class="chips" id="chips"></div>
     <div class="reco" id="reco"></div>
   </section>
 
   <section>
-    <h2>2 · Alle stijlen</h2>
+    <h2>3 · Alle stijlen</h2>
     <p class="sub">De hoofdindeling van animatie- en avatarstijlen — kenmerk en beste toepassing.</p>
     <div class="catalog" id="catalog"></div>
   </section>
 
   <section>
-    <h2>3 · Basisstack voor schaalbare e-learning</h2>
+    <h2>4 · Basisstack voor schaalbare e-learning</h2>
     <p class="sub">Snelle vuistregel per doel.</p>
     <div style="overflow-x:auto"><table class="stack" id="stack"><thead><tr><th>Doel</th><th>Beste keuze</th></tr></thead><tbody></tbody></table></div>
   </section>
@@ -137,6 +190,122 @@ const GOALS = [
 ];
 const byId = Object.fromEntries(STYLES.map(s=>[s.id,s]));
 
+// ===== merk-laag: doelgroepen-overzicht + echte opleidingscategorieën =====
+const DOMAINS = {
+  fin:    {label:'Financieel advies', kleur:'#116466'}, // teal
+  ziek:   {label:'Ziekteverzuim',     kleur:'#b8730c'}, // oker
+  comp:   {label:'Compliance & CDD',  kleur:'#3a4a8c'}, // indigo
+  socfin: {label:'Sociaal financieel',kleur:'#2f7a4d'}, // groen
+  soc:    {label:'Sociaal domein',    kleur:'#a8446a'}, // rozerood
+};
+// elke opleidingscategorie -> bestaande GOALS-id (doel) -> levert automatisch de stijl(en)
+const BRANDS = [
+  {
+    id:'lindenhaeghe', naam:'Lindenhaeghe', domein:'fin', tag:'Particulier',
+    url:'https://lindenhaeghe.nl/webshop',
+    professional:'Financieel adviseur (particulier)',
+    klant:'Particulieren en gezinnen — <span class="muted">&ldquo;mensen zoals jij en ik&rdquo;</span>',
+    scenario:'Hypotheek, pensioen of verzekering. Aan tafel in een woonhuis-context.',
+    persona:'Warme, betrouwbare particuliere adviseur (Souls Mila / Sanne / Daan)',
+    omgeving:'Keukentafel of woonkamer in een woonhuis — huiselijk en persoonlijk',
+    do:['Particulier gezin of koppel als klant','Adviesgesprek aan tafel','Warme, huiselijke sfeer'],
+    dont:['Geen zakelijke / ondernemer-context','Geen kille kantooromgeving'],
+    categorieen:[
+      {naam:'Wft-modules (Basis, Hypothecair, Pensioen, Vermogen, Schade)', doel:'theorie'},
+      {naam:'Advies- & gespreksvaardigheden / NLP', doel:'soft'},
+      {naam:'Klantcasus / PE-casuïstiek', doel:'casuistiek'},
+      {naam:'MiFID II / IDD / Wtp', doel:'compliance'},
+    ],
+  },
+  {
+    id:'foi', naam:'FOI', domein:'fin', tag:'Zakelijk',
+    url:'https://foi.nl/webshop',
+    professional:'Financieel adviseur (zakelijk)',
+    klant:'Ondernemers',
+    scenario:'Financiering van een bedrijfspand of werkvoorraad.',
+    letop:'Hier nooit met woonhuizen komen — het draait om de ondernemer aan tafel.',
+    persona:'Zakelijke financieel adviseur',
+    omgeving:'Kantoor of bedrijfspand — ondernemer aan tafel',
+    do:['Ondernemer / MKB als klant','Bedrijfspand, werkvoorraad, zakelijke context'],
+    dont:['NOOIT woonhuizen of gezinnen','Geen particuliere, huiselijke sfeer'],
+    categorieen:[
+      {naam:'Balans-, jaarrekening- & kasstroomanalyse', doel:'theorie'},
+      {naam:'Zakelijk adviesgesprek · Erkend Financieel Adviseur MKB', doel:'uitleg'},
+      {naam:'Vastgoed- / overname-financieringscasus', doel:'casuistiek'},
+      {naam:'Permanent Actueel / regelgeving', doel:'compliance'},
+    ],
+  },
+  {
+    id:'cs', naam:'CS opleidingen', domein:'ziek', tag:'Verzuim',
+    url:'https://cs-opleidingen.nl/opleidingen',
+    professional:'Arbeidsdeskundige, ziekteverzuimmanager',
+    klant:'Mensen die ziek of arbeidsongeschikt (dreigen te) raken',
+    scenario:'Advies over je financiën bij ziekte of arbeidsongeschiktheid, o.a. het berekenen van de restverdiencapaciteit.',
+    persona:'Arbeidsdeskundige — professioneel én empathisch',
+    omgeving:'Spreekkamer of kantoor, soms thuis bij de zieke medewerker',
+    do:['Respectvolle, ondersteunende toon','Gezondheids- en werkcontext'],
+    dont:['De zieke niet stigmatiseren','Geen &ldquo;zielig&rdquo; beeld'],
+    categorieen:[
+      {naam:'Wetgeving & rekenen (restverdiencapaciteit, WIA)', doel:'theorie'},
+      {naam:'Gespreksvoering / conflictbegeleiding', doel:'soft'},
+      {naam:'Re-integratie- / 2e-spoor-casus', doel:'casuistiek'},
+      {naam:'Casemanagement- & verzuimproces', doel:'uitleg'},
+    ],
+  },
+  {
+    id:'nci', naam:'NCI', domein:'comp', tag:'Compliance',
+    url:'https://compliance-instituut.nl/opleidingen/beroepsopleidingen',
+    professional:'Compliance-medewerker, CDD-analist',
+    klant:'Bedrijven (dossiers &amp; regelgeving) én klanten die gebeld worden voor checkvragen',
+    scenario:'Voldoen aan wet- en regelgeving. CDD = klantonderzoek: veel formulieren en dossiers, en controle op witwassen en terrorismefinanciering.',
+    persona:'Compliance-officer / CDD-analist — integer en precies',
+    omgeving:'Zakelijk kantoor, dossiers en schermen',
+    do:['Formele, zakelijke toon','Precies en regelgeving-gedreven'],
+    dont:['Geen losse / speelse toon bij witwas- of fraude-onderwerpen'],
+    categorieen:[
+      {naam:'CDD / AML-proces (klantonderzoek, dossiers)', doel:'compliance'},
+      {naam:'Witwassen / fraude-detectie', doel:'security'},
+      {naam:'Integriteit / DSI-programma’s', doel:'soft'},
+      {naam:'Regelgeving-theorie', doel:'theorie'},
+    ],
+  },
+  {
+    id:'learncare', naam:'Learncare', domein:'socfin', tag:'Sociaal financieel',
+    url:'https://learncare.nl/webshop',
+    professional:'Budgetcoach, schuldhulpverlener, bewindvoerder',
+    klant:'Mensen met financiële problemen — <span class="muted">die de centen niet meer rondkrijgen</span>',
+    scenario:'Budgetplan maken, schulden afbetalen en financiële beslissingen ondersteunen.',
+    persona:'Budgetcoach / schuldhulpverlener — warm en niet-oordelend',
+    omgeving:'Spreekkamer of huiskamer; cliënt in een kwetsbare situatie',
+    do:['Respectvol, hoopvol, menselijk','Focus op de weg vooruit'],
+    dont:['Geen stigmatiserend of oordelend schuldenbeeld'],
+    categorieen:[
+      {naam:'Budgetcoaching / cliëntgesprek', doel:'soft'},
+      {naam:'Schuldhulpverlening- & bewindvoeringsproces', doel:'uitleg'},
+      {naam:'Regelingen / belastingen / sociale zekerheid', doel:'theorie'},
+      {naam:'Cliënt- / ondernemer-met-schulden-casus', doel:'casuistiek'},
+    ],
+  },
+  {
+    id:'wwz', naam:'WWZ', domein:'soc', tag:'Sociaal (zorg)',
+    url:'https://wwz-academie.nl/opleidingen',
+    professional:'WMO-consulent, vaak bij een gemeente of apart kantoor',
+    klant:'Mensen die ondersteuning nodig hebben om mee te blijven doen in de maatschappij',
+    scenario:'Aanvragen van voorzieningen: een drempel bij het huis, een rolstoel of een budget. Sterk vanuit de gemeente gefaciliteerd.',
+    persona:'WMO-consulent — toegankelijk en inclusief',
+    omgeving:'Gemeenteloket of keukentafelgesprek bij de burger thuis',
+    do:['Divers en inclusief in beeld','Voorzieningen tastbaar tonen (rolstoel, drempel)'],
+    dont:['Niet bureaucratisch of kil overkomen'],
+    categorieen:[
+      {naam:'Wmo-keukentafelgesprek / consulentrol', doel:'uitleg'},
+      {naam:'Regelgeving (Wmo / Participatiewet / Wlz)', doel:'theorie'},
+      {naam:'Gesprek met burger / nieuwe autoriteit', doel:'soft'},
+      {naam:'Voorzieningen-aanvraagcasus', doel:'casuistiek'},
+    ],
+  },
+];
+const brandById = Object.fromEntries(BRANDS.map(b=>[b.id,b]));
+
 // catalogus
 const catEl = document.getElementById('catalog');
 catEl.innerHTML = STYLES.map(s=>`<div class="scard" data-id="${s.id}">
@@ -156,10 +325,10 @@ const recoEl = document.getElementById('reco');
 const resetBtn = document.getElementById('reset');
 let active = null;
 
-function select(id){
-  active = active===id ? null : id;
-  // chips
-  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.id===active));
+function select(id, force){
+  active = (!force && active===id) ? null : id;
+  // chips (alleen de leerdoel-chips in sectie 2)
+  chipsEl.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.id===active));
   // stack-tabel highlight
   document.querySelectorAll('#stack tbody tr').forEach(r=>r.classList.toggle('hot', r.dataset.goal===active));
   resetBtn.hidden = !active;
@@ -178,5 +347,68 @@ function clearMatch(){ catEl.querySelectorAll('.scard.match').forEach(e=>e.class
 
 chipsEl.addEventListener('click', e=>{const b=e.target.closest('.chip'); if(b) select(b.dataset.id);});
 resetBtn.addEventListener('click', ()=>select(active));
+
+// ===== merk-laag: chips + aanwijzing-paneel =====
+const brandChipsEl = document.getElementById('brandchips');
+const brandPanelEl = document.getElementById('brandpanel');
+const brandResetBtn = document.getElementById('brandreset');
+let activeBrand = null;
+
+brandChipsEl.innerHTML = BRANDS.map(b=>{
+  const d = DOMAINS[b.domein];
+  return `<button class="chip brandchip" data-id="${b.id}" style="--bc:${d.kleur}"><span class="bdot"></span>${b.naam}<span class="btag">${b.tag}</span></button>`;
+}).join('');
+
+function selectBrand(id){
+  activeBrand = activeBrand===id ? null : id;
+  document.querySelectorAll('.brandchip').forEach(c=>c.classList.toggle('on', c.dataset.id===activeBrand));
+  brandResetBtn.hidden = !activeBrand;
+  if(active) select(active); // wis een eventueel gekozen leerdoel bij merk-wissel
+  if(!activeBrand){ brandPanelEl.classList.remove('show'); brandPanelEl.innerHTML=''; return; }
+  const b = brandById[activeBrand], d = DOMAINS[b.domein];
+  brandPanelEl.setAttribute('style', `--bc:${d.kleur}`);
+  brandPanelEl.innerHTML = `
+    <div class="bp-head">
+      <span class="bp-dot"></span><span class="bp-domein">${d.label}</span>
+      <span class="bp-naam">${b.naam}</span><span class="bp-tag">${b.tag}</span>
+      <a class="brand-source" href="${b.url}" target="_blank" rel="noopener">Bekijk opleidingen ↗</a>
+    </div>
+    <div class="bp-body">
+      <dl class="bp-dl">
+        <dt>Professional</dt><dd>${b.professional}</dd>
+        <dt>Klant</dt><dd>${b.klant}</dd>
+        <dt>Scenario&rsquo;s</dt><dd>${b.scenario}</dd>
+      </dl>
+      ${b.letop ? `<div class="bp-note"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="color:var(--lh-red);flex:0 0 auto;margin-top:1px"><path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/></svg><span><b>Let op:</b> ${b.letop}</span></div>` : ''}
+      <div class="bp-grid">
+        <div><div class="bp-k">Persona</div><div class="bp-v">${b.persona}</div>
+             <div class="bp-k">Omgeving</div><div class="bp-v">${b.omgeving}</div></div>
+        <div><div class="bp-k">Do&rsquo;s</div><ul class="do">${b.do.map(x=>`<li>${x}</li>`).join('')}</ul>
+             <div class="bp-k">Don&rsquo;ts</div><ul class="dont">${b.dont.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      </div>
+      <div class="bp-cats">
+        <div class="bp-k">Kies een opleidingscategorie → aanbevolen stijl</div>
+        <div class="chips bp-catchips">${b.categorieen.map((c,i)=>`<button class="chip catchip" data-goal="${c.doel}" data-i="${i}">${c.naam}</button>`).join('')}</div>
+      </div>
+      <div class="brand-reco" id="brandReco"></div>
+    </div>`;
+  brandPanelEl.classList.add('show');
+}
+
+brandChipsEl.addEventListener('click', e=>{const btn=e.target.closest('.brandchip'); if(btn) selectBrand(btn.dataset.id);});
+brandResetBtn.addEventListener('click', ()=>{ if(activeBrand) selectBrand(activeBrand); });
+
+brandPanelEl.addEventListener('click', e=>{
+  const cc = e.target.closest('.catchip'); if(!cc) return;
+  const wasOn = cc.classList.contains('on');
+  brandPanelEl.querySelectorAll('.catchip').forEach(x=>x.classList.remove('on'));
+  const rec = document.getElementById('brandReco');
+  if(wasOn){ rec.innerHTML=''; if(active) select(active); return; } // zelfde categorie = uit
+  cc.classList.add('on');
+  const goal = cc.dataset.goal, g = GOALS.find(x=>x.id===goal);
+  rec.innerHTML = `<div class="reco-top"><span class="for">Aanwijzing voor</span> <span class="goal">${cc.textContent.trim()}</span> <span class="arrow">→</span> <span class="pick">${g.keuze}</span></div>
+    <div class="reco-body">${g.styles.map(sid=>{const s=byId[sid];return `<div class="reco-card"><div class="cat">${s.cat}</div><div class="k">${s.kenmerk}</div><span class="t">${s.toep}</span></div>`;}).join('')}</div>`;
+  select(goal, true); // sync leerdoel-chip + catalogus-highlight + basisstack-rij
+});
 </script>
 </body></html>
