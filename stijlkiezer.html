@@ -46,18 +46,6 @@
   .reco-card .k{font-size:.82rem;color:var(--ink-2);margin-bottom:8px;}
   .reco-card .t{display:inline-block;font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--lh-green);padding:2px 8px;border-radius:5px;}
 
-  /* stijl-catalogus */
-  .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
-  .scard{border:1px solid var(--rule);border-radius:12px;padding:14px 16px;background:var(--paper);transition:opacity .2s,box-shadow .2s,border-color .2s,transform .2s;}
-  .scard .cat{font-family:var(--serif);font-weight:600;font-size:1.06rem;letter-spacing:-.01em;}
-  .scard .k{color:var(--ink-2);font-size:.88rem;margin:4px 0 10px;}
-  .scard .t{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);}
-  .scard .t b{color:var(--ink-2);font-weight:600;}
-  .catalog.filtered .scard{opacity:.32;}
-  .catalog.filtered .scard.match{opacity:1;border-color:var(--navy);box-shadow:0 8px 24px -14px rgba(30,39,97,.5);transform:translateY(-2px);}
-  .scard .badge{display:none;margin-top:9px;font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--navy);background:rgba(30,39,97,.09);padding:3px 8px;border-radius:5px;}
-  .catalog.filtered .scard.match .badge{display:inline-block;}
-
   /* basisstack-tabel */
   table.stack{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--rule);border-radius:10px;overflow:hidden;font-size:.92rem;}
   table.stack th,table.stack td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--rule);}
@@ -113,6 +101,44 @@
   .bp-catchips{margin-top:8px;}
   .catchip.on{background:var(--bc);border-color:var(--bc);color:#fff;}
   .brand-reco{margin-top:12px;}
+
+  .bp-hint{margin:0 0 10px;font-size:.85rem;color:var(--muted);}
+
+  /* ===== stijl-galerij (echte board-stijlen, zelfde scène) ===== */
+  .gal-group{margin-top:22px;}
+  .gal-group:first-child{margin-top:4px;}
+  .gal-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--rule);}
+  .gal-head h3{font-family:var(--serif);font-weight:600;font-size:1.06rem;margin:0;letter-spacing:-.01em;}
+  .gal-head a{font-size:.78rem;color:var(--navy);text-decoration:none;white-space:nowrap;}
+  .gal-head a:hover{text-decoration:underline;}
+  .gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:12px;}
+  .gcard{border:1px solid var(--rule);border-radius:11px;overflow:hidden;background:var(--paper);transition:box-shadow .2s,transform .2s,border-color .2s;}
+  .gcard:hover{box-shadow:0 8px 22px -14px rgba(30,39,97,.45);transform:translateY(-2px);border-color:var(--rule-2,#c7cdd9);}
+  .gcard .gimg{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;position:relative;}
+  .gcard .gmulti{position:absolute;right:8px;bottom:8px;font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.03em;color:#fff;background:rgba(22,25,31,.72);padding:3px 8px;border-radius:6px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
+  .gcard img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;background:var(--paper-2);}
+  .gcard .gm{padding:9px 12px 11px;}
+  .gcard .gcode{float:right;font-family:var(--mono);font-size:.58rem;font-weight:700;color:var(--navy);background:rgba(30,39,97,.08);padding:2px 6px;border-radius:4px;}
+  .gcard .gnaam{font-family:var(--serif);font-weight:600;font-size:.98rem;letter-spacing:-.01em;}
+  .gcard .gk{color:var(--ink-2);font-size:.8rem;margin-top:2px;}
+
+  /* aanbevolen-stijl-namen (chips) in het reco-paneel + merk-paneel */
+  .reco-names{display:flex;flex-wrap:wrap;gap:6px;padding:13px 18px 15px;}
+  .rn{font-family:var(--sans);font-size:.8rem;font-weight:600;color:var(--ink-2);background:var(--paper-2);border:1px solid var(--rule);padding:5px 11px;border-radius:999px;}
+  .brand-reco .reco-names{padding:12px 0 2px;}
+
+  /* lightbox (in-pagina vergroten, geen nieuw venster) */
+  .lb{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,48px);background:rgba(16,19,23,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+  .lb[hidden]{display:none;}
+  .lb-fig{margin:0;max-width:min(1100px,92vw);display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .lb-fig img{max-width:100%;max-height:80vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff;}
+  .lb-fig figcaption{font-family:var(--sans);font-size:.85rem;color:#fff;opacity:.92;text-align:center;}
+  .lb-close{position:absolute;top:16px;right:18px;width:40px;height:40px;border-radius:999px;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:1.05rem;cursor:pointer;}
+  .lb-close:hover{background:rgba(255,255,255,.28);}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:999px;border:0;background:rgba(255,255,255,.15);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;}
+  .lb-nav:hover{background:rgba(255,255,255,.28);}
+  .lb-prev{left:18px;} .lb-next{right:18px;}
+  @media(max-width:640px){.lb-nav{width:38px;height:38px;font-size:1.3rem;}}
 </style></head><body>
 
 <nav class="topnav" aria-label="Paginanavigatie">
@@ -135,60 +161,59 @@
 
 <main class="shell">
   <section>
-    <h2>1 · Kies je merk &amp; opleiding</h2>
-    <p class="sub">Kies je label. Je ziet de doelgroep, de opleidingscategorieën en een concrete aanwijzing — stijl, persona en omgeving — voor de animaties. <button class="reset" id="brandreset" hidden>wis merk</button></p>
+    <h2>1 · Kies je merk</h2>
+    <p class="sub">Kies je merk / label — je ziet de doelgroep en een concrete aanwijzing (persona, omgeving, do's &amp; don'ts). <button class="reset" id="brandreset" hidden>wis merk</button></p>
     <div class="brandchips" id="brandchips"></div>
     <div class="brand-panel" id="brandpanel"></div>
   </section>
 
   <section>
-    <h2>2 · Wat wil je maken?</h2>
-    <p class="sub">Kies een doel. De aanbeveling en de passende stijlen lichten hieronder op. <button class="reset" id="reset" hidden>toon alles</button></p>
+    <h2>2 · Kies de opleidingscategorie</h2>
+    <p class="sub">Je keuze bepaalt <strong>wat je wilt maken</strong> (stap 3) en filtert het resultaat onderaan.</p>
+    <p class="bp-hint" id="catHint">Kies eerst een merk bij stap 1.</p>
+    <div class="chips bp-catchips" id="catchips"></div>
+  </section>
+
+  <section>
+    <h2>3 · Wat wil je maken?</h2>
+    <p class="sub">Volgt uit je opleidingscategorie hierboven — of kies hier direct een doel. Het resultaat onderaan filtert mee. <button class="reset" id="reset" hidden>toon alles</button></p>
     <div class="chips" id="chips"></div>
     <div class="reco" id="reco"></div>
   </section>
 
   <section>
-    <h2>3 · Alle stijlen</h2>
-    <p class="sub">De hoofdindeling van animatie- en avatarstijlen — kenmerk en beste toepassing.</p>
-    <div class="catalog" id="catalog"></div>
+    <p class="kicker" style="margin:0 0 2px;">Resultaat</p>
+    <h2>De stijlen</h2>
+    <p class="sub" id="galSub">Kies hierboven een merk + opleiding of een doel om te filteren — anders zie je alle stijlen. Elke stijl met dezelfde advies-scène als voorbeeld; klik een beeld voor groot. <button class="reset" id="galReset" hidden>toon alle stijlen</button></p>
+    <div id="galerij"></div>
   </section>
 
   <section>
-    <h2>4 · Basisstack voor schaalbare e-learning</h2>
-    <p class="sub">Snelle vuistregel per doel.</p>
+    <h2>Basisstack — vuistregel per doel</h2>
+    <p class="sub">Snelle referentie: per leerdoel de aanbevolen stijlrichting.</p>
     <div style="overflow-x:auto"><table class="stack" id="stack"><thead><tr><th>Doel</th><th>Beste keuze</th></tr></thead><tbody></tbody></table></div>
   </section>
 </main>
 
+<div id="lightbox" class="lb" hidden role="dialog" aria-modal="true" aria-label="Stijlvoorbeeld">
+  <button class="lb-close" type="button" aria-label="Sluiten">✕</button>
+  <button class="lb-nav lb-prev" type="button" aria-label="Vorige">‹</button>
+  <figure class="lb-fig"><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav lb-next" type="button" aria-label="Volgende">›</button>
+</div>
+
 <footer class="shell">WFT · Stijlverkenning — hulpmiddel om doel en stijl te koppelen. Interne verkenning. · <a href="afgekeurd.html" style="color:inherit;text-decoration:underline;">Afgekeurd&nbsp;↗</a></footer>
 
 <script>
-const STYLES = [
-  {id:'realavatar', cat:'Realistische video-avatar', kenmerk:'Menselijk, geloofwaardig', toep:'Uitleg, onboarding, gedrag'},
-  {id:'semi',       cat:'Semi-realistische avatar', kenmerk:'Professioneel maar toegankelijk', toep:'Corporate learning'},
-  {id:'2d',         cat:'2D illustratief', kenmerk:'Simpel, snel, schaalbaar', toep:'Theorie, processen'},
-  {id:'whiteboard', cat:'Whiteboard animatie', kenmerk:'Tekenen tijdens uitleg', toep:'Conceptuitleg'},
-  {id:'motion',     cat:'Motion graphics', kenmerk:'Abstracte visuele beweging', toep:'Data/processen'},
-  {id:'3d',         cat:'3D realistisch', kenmerk:'Diepte en simulatie', toep:'Veiligheid, techniek'},
-  {id:'pixar',      cat:'Pixar/cartoon stijl', kenmerk:'Emotioneel en speels', toep:'Soft skills, onboarding'},
-  {id:'hand',       cat:'Handgetekend', kenmerk:'Persoonlijk, menselijk', toep:'Reflectie, storytelling'},
-  {id:'iso',        cat:'Isometrisch', kenmerk:'Zakelijk overzichtelijk', toep:'Processen/systemen'},
-  {id:'screencast', cat:'Screencast / systeemanimatie', kenmerk:'Echte software tonen', toep:'Tooltraining'},
-  {id:'ai',         cat:"AI-gegenereerde scenario's", kenmerk:'Flexibel en snel', toep:'Casuïstiek'},
-  {id:'game',       cat:'Game/simulatie stijl', kenmerk:'Interactief', toep:'Vaardigheidstraining'},
-];
+// leerdoel -> aanbevolen ECHTE stijlen (board-codes) + korte richting.
+// byCode wordt afgeleid van STIJLGALERIJ (verderop): één stijl-woordenlijst voor de hele pagina.
 const GOALS = [
-  {id:'theorie',    doel:'Algemene theorie',    keuze:'2D motion graphics',        styles:['2d','motion']},
-  {id:'uitleg',     doel:'Professionele uitleg', keuze:'Semi-realistische avatars', styles:['semi','realavatar']},
-  {id:'casuistiek', doel:'Casuïstiek',           keuze:"AI-scenario's",             styles:['ai']},
-  {id:'soft',       doel:'Soft skills',          keuze:'Semi-realistisch / cartoon', styles:['pixar','semi']},
-  {id:'compliance', doel:'Compliance',           keuze:'Zakelijk 2D + avatar',      styles:['iso','2d','semi']},
-  {id:'security',   doel:'Security awareness',   keuze:"Simulaties + scenario's",   styles:['game','ai']},
-  {id:'software',   doel:'Softwaretraining',     keuze:'Screencast',                styles:['screencast']},
-  {id:'praktijk',   doel:'Veiligheid / praktijk', keuze:'3D waar nodig',            styles:['3d']},
+  {id:'theorie',    doel:'Algemene theorie',      keuze:'Plat & grafisch',                styles:['c1','c2','c7','c16','c17']},
+  {id:'uitleg',     doel:'Professionele uitleg',  keuze:'Realistisch & semi-realistisch', styles:['a1','a2','a3','a5','a7','b7','p9']},
+  {id:'soft',       doel:'Soft skills',           keuze:'Warm & menselijk',               styles:['a5','a7','b2','b4','b7']},
+  {id:'compliance', doel:'Compliance',            keuze:'Clean & zakelijk',               styles:['a2','c1','c7','p9']},
+  {id:'security',   doel:'Security awareness',    keuze:'Realistisch scenario + data',    styles:['a1','a3','b6','c16']},
 ];
-const byId = Object.fromEntries(STYLES.map(s=>[s.id,s]));
 
 // ===== merk-laag: doelgroepen-overzicht + echte opleidingscategorieën =====
 const DOMAINS = {
@@ -213,7 +238,7 @@ const BRANDS = [
     categorieen:[
       {naam:'Wft-modules (Basis, Hypothecair, Pensioen, Vermogen, Schade)', doel:'theorie'},
       {naam:'Advies- & gespreksvaardigheden / NLP', doel:'soft'},
-      {naam:'Klantcasus / PE-casuïstiek', doel:'casuistiek'},
+      {naam:'Klantcasus / PE-casuïstiek', doel:'soft'},
       {naam:'MiFID II / IDD / Wtp', doel:'compliance'},
     ],
   },
@@ -231,7 +256,7 @@ const BRANDS = [
     categorieen:[
       {naam:'Balans-, jaarrekening- & kasstroomanalyse', doel:'theorie'},
       {naam:'Zakelijk adviesgesprek · Erkend Financieel Adviseur MKB', doel:'uitleg'},
-      {naam:'Vastgoed- / overname-financieringscasus', doel:'casuistiek'},
+      {naam:'Vastgoed- / overname-financieringscasus', doel:'soft'},
       {naam:'Permanent Actueel / regelgeving', doel:'compliance'},
     ],
   },
@@ -248,7 +273,7 @@ const BRANDS = [
     categorieen:[
       {naam:'Wetgeving & rekenen (restverdiencapaciteit, WIA)', doel:'theorie'},
       {naam:'Gespreksvoering / conflictbegeleiding', doel:'soft'},
-      {naam:'Re-integratie- / 2e-spoor-casus', doel:'casuistiek'},
+      {naam:'Re-integratie- / 2e-spoor-casus', doel:'soft'},
       {naam:'Casemanagement- & verzuimproces', doel:'uitleg'},
     ],
   },
@@ -283,7 +308,7 @@ const BRANDS = [
       {naam:'Budgetcoaching / cliëntgesprek', doel:'soft'},
       {naam:'Schuldhulpverlening- & bewindvoeringsproces', doel:'uitleg'},
       {naam:'Regelingen / belastingen / sociale zekerheid', doel:'theorie'},
-      {naam:'Cliënt- / ondernemer-met-schulden-casus', doel:'casuistiek'},
+      {naam:'Cliënt- / ondernemer-met-schulden-casus', doel:'soft'},
     ],
   },
   {
@@ -300,18 +325,13 @@ const BRANDS = [
       {naam:'Wmo-keukentafelgesprek / consulentrol', doel:'uitleg'},
       {naam:'Regelgeving (Wmo / Participatiewet / Wlz)', doel:'theorie'},
       {naam:'Gesprek met burger / nieuwe autoriteit', doel:'soft'},
-      {naam:'Voorzieningen-aanvraagcasus', doel:'casuistiek'},
+      {naam:'Voorzieningen-aanvraagcasus', doel:'soft'},
     ],
   },
 ];
 const brandById = Object.fromEntries(BRANDS.map(b=>[b.id,b]));
 
-// catalogus
-const catEl = document.getElementById('catalog');
-catEl.innerHTML = STYLES.map(s=>`<div class="scard" data-id="${s.id}">
-  <div class="cat">${s.cat}</div><div class="k">${s.kenmerk}</div>
-  <div class="t"><b>Beste toepassing:</b> ${s.toep}</div>
-  <div class="badge">past bij je doel</div></div>`).join('');
+// (de aparte abstracte stijl-catalogus is vervangen door de galerij hieronder — één woordenlijst)
 
 // basisstack-tabel
 document.querySelector('#stack tbody').innerHTML = GOALS.map(g=>
@@ -325,32 +345,29 @@ const recoEl = document.getElementById('reco');
 const resetBtn = document.getElementById('reset');
 let active = null;
 
+// compacte lijst van aanbevolen stijl-namen (echte woordenlijst)
+function styleChips(codes){ return `<div class="reco-names">${codes.map(code=>`<span class="rn">${byCode[code].naam}</span>`).join('')}</div>`; }
+
 function select(id, force){
   active = (!force && active===id) ? null : id;
-  // chips (alleen de leerdoel-chips in sectie 2)
   chipsEl.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.id===active));
-  // stack-tabel highlight
   document.querySelectorAll('#stack tbody tr').forEach(r=>r.classList.toggle('hot', r.dataset.goal===active));
   resetBtn.hidden = !active;
-  if(!active){ recoEl.classList.remove('show'); catEl.classList.remove('filtered'); clearMatch(); return; }
+  filterGallery(); // filter de stijl-galerij mee op de keuze
+  if(!active){ recoEl.classList.remove('show'); return; }
   const g = GOALS.find(x=>x.id===active);
-  // aanbeveling
-  recoEl.innerHTML = `<div class="reco-top"><span class="for">Voor</span> <span class="goal">${g.doel}</span> <span class="arrow">→</span> <span class="pick">${g.keuze}</span></div>
-    <div class="reco-body">${g.styles.map(sid=>{const s=byId[sid];return `<div class="reco-card"><div class="cat">${s.cat}</div><div class="k">${s.kenmerk}</div><span class="t">${s.toep}</span></div>`;}).join('')}</div>`;
+  recoEl.innerHTML = `<div class="reco-top"><span class="for">Voor</span> <span class="goal">${g.doel}</span> <span class="arrow">→</span> <span class="pick">${g.keuze}</span> <span class="for">· zie galerij</span></div>${styleChips(g.styles)}`;
   recoEl.classList.add('show');
-  // catalogus filteren
-  catEl.classList.add('filtered');
-  clearMatch();
-  g.styles.forEach(sid=>{const el=catEl.querySelector(`.scard[data-id="${sid}"]`); if(el) el.classList.add('match');});
 }
-function clearMatch(){ catEl.querySelectorAll('.scard.match').forEach(e=>e.classList.remove('match')); }
 
 chipsEl.addEventListener('click', e=>{const b=e.target.closest('.chip'); if(b) select(b.dataset.id);});
-resetBtn.addEventListener('click', ()=>select(active));
+resetBtn.addEventListener('click', ()=>{ if(active) select(active); });
 
 // ===== merk-laag: chips + aanwijzing-paneel =====
 const brandChipsEl = document.getElementById('brandchips');
 const brandPanelEl = document.getElementById('brandpanel');
+const catchipsEl = document.getElementById('catchips');
+const catHint = document.getElementById('catHint');
 const brandResetBtn = document.getElementById('brandreset');
 let activeBrand = null;
 
@@ -364,8 +381,17 @@ function selectBrand(id){
   document.querySelectorAll('.brandchip').forEach(c=>c.classList.toggle('on', c.dataset.id===activeBrand));
   brandResetBtn.hidden = !activeBrand;
   if(active) select(active); // wis een eventueel gekozen leerdoel bij merk-wissel
-  if(!activeBrand){ brandPanelEl.classList.remove('show'); brandPanelEl.innerHTML=''; return; }
+  if(!activeBrand){
+    brandPanelEl.classList.remove('show'); brandPanelEl.innerHTML='';
+    catchipsEl.innerHTML=''; catHint.hidden=false;
+    return;
+  }
   const b = brandById[activeBrand], d = DOMAINS[b.domein];
+  // stap 2 — opleidingscategorie (eigen sectie): vul de chips na de merk-keuze
+  catchipsEl.setAttribute('style', `--bc:${d.kleur}`);
+  catchipsEl.innerHTML = b.categorieen.map((c,i)=>`<button class="chip catchip" data-goal="${c.doel}" data-i="${i}">${c.naam}</button>`).join('');
+  catHint.hidden = true;
+  // merk-identiteit / aanwijzing (los van de keuzestappen)
   brandPanelEl.setAttribute('style', `--bc:${d.kleur}`);
   brandPanelEl.innerHTML = `
     <div class="bp-head">
@@ -386,11 +412,6 @@ function selectBrand(id){
         <div><div class="bp-k">Do&rsquo;s</div><ul class="do">${b.do.map(x=>`<li>${x}</li>`).join('')}</ul>
              <div class="bp-k">Don&rsquo;ts</div><ul class="dont">${b.dont.map(x=>`<li>${x}</li>`).join('')}</ul></div>
       </div>
-      <div class="bp-cats">
-        <div class="bp-k">Kies een opleidingscategorie → aanbevolen stijl</div>
-        <div class="chips bp-catchips">${b.categorieen.map((c,i)=>`<button class="chip catchip" data-goal="${c.doel}" data-i="${i}">${c.naam}</button>`).join('')}</div>
-      </div>
-      <div class="brand-reco" id="brandReco"></div>
     </div>`;
   brandPanelEl.classList.add('show');
 }
@@ -398,17 +419,102 @@ function selectBrand(id){
 brandChipsEl.addEventListener('click', e=>{const btn=e.target.closest('.brandchip'); if(btn) selectBrand(btn.dataset.id);});
 brandResetBtn.addEventListener('click', ()=>{ if(activeBrand) selectBrand(activeBrand); });
 
-brandPanelEl.addEventListener('click', e=>{
+catchipsEl.addEventListener('click', e=>{
   const cc = e.target.closest('.catchip'); if(!cc) return;
   const wasOn = cc.classList.contains('on');
-  brandPanelEl.querySelectorAll('.catchip').forEach(x=>x.classList.remove('on'));
-  const rec = document.getElementById('brandReco');
-  if(wasOn){ rec.innerHTML=''; if(active) select(active); return; } // zelfde categorie = uit
+  catchipsEl.querySelectorAll('.catchip').forEach(x=>x.classList.remove('on'));
+  if(wasOn){ if(active) select(active); return; } // zelfde categorie = uit
   cc.classList.add('on');
-  const goal = cc.dataset.goal, g = GOALS.find(x=>x.id===goal);
-  rec.innerHTML = `<div class="reco-top"><span class="for">Aanwijzing voor</span> <span class="goal">${cc.textContent.trim()}</span> <span class="arrow">→</span> <span class="pick">${g.keuze}</span></div>
-    <div class="reco-body">${g.styles.map(sid=>{const s=byId[sid];return `<div class="reco-card"><div class="cat">${s.cat}</div><div class="k">${s.kenmerk}</div><span class="t">${s.toep}</span></div>`;}).join('')}</div>`;
-  select(goal, true); // sync leerdoel-chip + catalogus-highlight + basisstack-rij
+  select(cc.dataset.goal, true); // stuurt "Wat wil je maken" (stap 2) + het resultaat
+});
+
+// ===== stijl-galerij: echte board-stijlen, dezelfde advies-scène =====
+const GAL_BASE='https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/stijlkiezer/';
+// velden: [code, naam, kenmerk, board-origineel (renders_test/<file>) of null, ownRender?, boardEerst?]
+// ownRender=false => onze eigen render weglaten (alleen board); boardEerst=true => board als 1e (thumbnail)
+const STIJLGALERIJ=[
+ {cat:'Realistisch', page:'realistisch.html', items:[
+   ['a1','Studio Cinematic','Filmisch, warm, sfeervol','real-cinematic',false],
+   ['a2','Clean CGI','Fotoreal, clean, perfect gerenderd','real-cgi',false],
+   ['a3','Documentair Echt','Natuurlijk, licht, authentiek','real-documentary',true,true],
+   ['a5','High-Key','Helder, luchtig, weinig schaduw','real-highkey',false],
+   ['a7','Golden Hour','Warme avondgloed door het raam','real-goldenhour',false],
+ ]},
+ {cat:'Hybride', page:'hybride.html', items:[
+   ['b2','Cinematisch geschilderd','Digital painting, penseelstreken','hyb2-b2'],
+   ['b4','Clay 3D','Zachte klei-3D, tactiel en warm',null],
+   ['b5','Foto × lijn','Echte foto + hand-getekende lijn','hyb2-b5',false],
+   ['b6','Foto × 3D','Echte foto + gerenderde 3D-elementen','hyb2-b6',false],
+   ['b7','Semi-realistisch 3D','Tussen foto en 3D',null],
+ ]},
+ {cat:'Infomercial', page:'infomercial.html', items:[
+   ['c1','Clean Flat Vector','Strak, plat, tijdloos','inf-c1',true,true],
+   ['c2','Line-icon Flat','Dunne lijn-iconen, minimaal','inf-c2',false],
+   ['c7','Isometric Flat','Isometrische maquette','inf-c7',true,true],
+   ['c16','Motion-graphics','Abstracte data-beweging',null],
+   ['c17','Whiteboard Doodle','Live marker-uitleg','inf-c17',true,true],
+ ]},
+ {cat:'Presentator', page:'presentator.html', items:[
+   ['p9','Clean Minimal Modern','Helder, minimaal, premium','pres-p9',false],
+ ]},
+];
+const RENDERS_BASE='https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/public/wft-styles/renders_test/';
+const byCode={}, galImages={};
+STIJLGALERIJ.forEach(g=>g.items.forEach(([code,naam,k,board,own,boardFirst])=>{
+  byCode[code]={code,naam,k,cat:g.cat};
+  const ours = own!==false ? [{url:GAL_BASE+code+'.jpg', label:'Onze render · zelfde advies-scène'}] : [];
+  const brd  = board ? [{url:RENDERS_BASE+board+'.jpg', label:'Board-voorbeeld · WFT-verkenning'}] : [];
+  galImages[code] = boardFirst ? brd.concat(ours) : ours.concat(brd);
+}));
+const galEl=document.getElementById('galerij');
+galEl.innerHTML=STIJLGALERIJ.map(g=>`<div class="gal-group">
+  <div class="gal-head"><h3>${g.cat}</h3><a href="${g.page}">Alle ${g.cat.toLowerCase()}-stijlen ↗</a></div>
+  <div class="gal-grid">${g.items.map(([code,naam,k])=>`<div class="gcard" data-code="${code}">
+    <button class="gimg" data-code="${code}" type="button" aria-label="Vergroot ${naam}"><img loading="lazy" src="${galImages[code][0].url}" alt="${naam}">${galImages[code].length>1?'<span class="gmulti">2 voorbeelden</span>':''}</button>
+    <div class="gm"><span class="gcode">${code.toUpperCase()}</span><div class="gnaam">${naam}</div><div class="gk">${k}</div></div>
+  </div>`).join('')}</div></div>`).join('');
+
+const galReset = document.getElementById('galReset');
+function filterGallery(){
+  const cards = galEl.querySelectorAll('.gcard');
+  const groups = galEl.querySelectorAll('.gal-group');
+  if(!active){
+    cards.forEach(c=>c.style.display='');
+    groups.forEach(g=>g.style.display='');
+    galReset.hidden = true;
+    return;
+  }
+  const codes = (GOALS.find(x=>x.id===active)||{}).styles || [];
+  cards.forEach(c=>{ c.style.display = codes.includes(c.dataset.code) ? '' : 'none'; });
+  groups.forEach(g=>{ const vis=[...g.querySelectorAll('.gcard')].some(c=>c.style.display!=='none'); g.style.display = vis ? '' : 'none'; });
+  galReset.hidden = false;
+}
+galReset.addEventListener('click', ()=>{ if(active) select(active); });
+
+// ===== lightbox: klik een stijl -> vergroot in-pagina (geen nieuw venster), blader door voorbeelden =====
+const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg'), lbCap=document.getElementById('lbCap');
+let lbList=[], lbIdx=0;
+function lbShow(){
+  const it=lbList[lbIdx]; lbImg.src=it.url; lbImg.alt=it.label;
+  lbCap.textContent = it.label + (lbList.length>1 ? `  ·  ${lbIdx+1}/${lbList.length}` : '');
+  const multi=lbList.length>1;
+  lb.querySelector('.lb-prev').style.display = multi?'':'none';
+  lb.querySelector('.lb-next').style.display = multi?'':'none';
+}
+function openLightbox(code){ lbList=galImages[code]||[]; if(!lbList.length) return; lbIdx=0; lbShow(); lb.hidden=false; document.body.style.overflow='hidden'; }
+function closeLightbox(){ lb.hidden=true; lbImg.src=''; document.body.style.overflow=''; }
+function lbStep(d){ lbIdx=(lbIdx+d+lbList.length)%lbList.length; lbShow(); }
+galEl.addEventListener('click', e=>{ const b=e.target.closest('.gimg'); if(b) openLightbox(b.dataset.code); });
+lb.addEventListener('click', e=>{
+  if(e.target===lb || e.target.closest('.lb-close')) closeLightbox();
+  else if(e.target.closest('.lb-prev')) lbStep(-1);
+  else if(e.target.closest('.lb-next')) lbStep(1);
+});
+document.addEventListener('keydown', e=>{
+  if(lb.hidden) return;
+  if(e.key==='Escape') closeLightbox();
+  else if(e.key==='ArrowLeft') lbStep(-1);
+  else if(e.key==='ArrowRight') lbStep(1);
 });
 </script>
 </body></html>
