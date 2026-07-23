@@ -462,8 +462,8 @@ const RENDERS_BASE='https://fuesnaztbyhygyladlbv.supabase.co/storage/v1/object/p
 const byCode={}, galImages={};
 STIJLGALERIJ.forEach(g=>g.items.forEach(([code,naam,k,board,own,boardFirst])=>{
   byCode[code]={code,naam,k,cat:g.cat};
-  const ours = own!==false ? [{url:GAL_BASE+code+'.jpg', label:'Onze render · zelfde advies-scène'}] : [];
-  const brd  = board ? [{url:RENDERS_BASE+board+'.jpg', label:'Board-voorbeeld · WFT-verkenning'}] : [];
+  const ours = own!==false ? [{url:GAL_BASE+code+'.webp', label:'Onze render · zelfde advies-scène'}] : [];
+  const brd  = board ? [{url:RENDERS_BASE+board+'.webp', label:'Board-voorbeeld · WFT-verkenning'}] : [];
   galImages[code] = boardFirst ? brd.concat(ours) : ours.concat(brd);
 }));
 const galEl=document.getElementById('galerij');
